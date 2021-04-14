@@ -1,23 +1,23 @@
-import User from '../models/user'
+const Knex = require('../database/')
 
 // GET Method
-
-// POST Method
-const login = async (req, res) => {
+const getUsers =  async (req, res) => {
     try {
-        const { email, password } = req.body
+        const users = await Knex.select('*').from('User')
 
-        
+        res.status(200).send(users)
 
-    } catch (err) {
+    } catch(err) {
         res.status(400).send({ msg: err.message })
     }
 }
+
+// POST Method
 
 // PATCH Method
 
 // DELETE Method
 
-export default {
-
+module.exports = {
+    getUsers
 }
