@@ -1,0 +1,22 @@
+version: 3.1
+
+services:
+    nginx:
+        restart: always
+        depends_on: 
+            - admin
+            - api   
+        build: ./nginx
+        ports:
+            - 80:80 
+    admin:
+        image: fantasyzernontra/ssh-admin:prod
+        container_name: admin
+        restart: always
+        depends_on:
+            - api
+    api:
+        image: fantasyzernontra/ssh-api:prod
+        container_name: api
+        restart: always
+
