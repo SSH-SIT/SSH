@@ -1,0 +1,6 @@
+.vscode/
+build/
+.next/
+out/
+node_modules/
+yarn.lock
