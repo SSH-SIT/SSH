@@ -2,7 +2,7 @@ name: SSH API
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - 'api/**'
 

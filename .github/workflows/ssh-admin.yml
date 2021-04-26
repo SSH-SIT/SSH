@@ -2,7 +2,7 @@ name: SSH Admin Page
 on:
   push:
     branches:
-      - master
+      - main
     paths:
       - 'ssh_admin/**'
 
