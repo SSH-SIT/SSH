@@ -4,7 +4,7 @@
   "description": "API of Safe Sex Harajuku",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node index.js",
+    "start": "NODE_ENV=production node -r dotenv/config index.js",
     "dev": "nodemon -r dotenv/config index.js"
   },
   "author": "CS@SIT Student",
