@@ -1,6 +1,8 @@
-import { createStore, createTypedHooks } from 'easy-peasy'
+import storeModel from "./models";
 
-const { useStoreActions, useStoreDispatch, useStoreState } = createTypedHooks()
-export { useStoreActions, useStoreDispatch, useStoreState }
+import { createStore, createTypedHooks } from "easy-peasy";
 
-export default createStore(storeModel, { name: 'ssh-admin-store' })
+const { useStoreActions, useStoreDispatch, useStoreState } = createTypedHooks();
+export { useStoreActions, useStoreDispatch, useStoreState };
+
+export default createStore(storeModel, { name: "ssh-admin-store" });
