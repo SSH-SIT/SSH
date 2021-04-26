@@ -9,7 +9,7 @@ on:
 env:
   TEAM: fantasyzernontra
   REPOSITORY: ssh-admin
-  FOLDER: admin
+  FOLDER: ssh_admin
   TAG_NAME: prod
 
 jobs:
