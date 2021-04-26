@@ -6,7 +6,7 @@ import store from '../store'
 import { CssBaseline } from '@material-ui/core'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { Theme } from '../styles/theme'
-import '../styles/globals.css'
+import '../styles/styles.css'
 
 function MyApp({ Component, pageProps }) {
   return (
