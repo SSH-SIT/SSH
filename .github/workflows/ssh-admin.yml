@@ -28,7 +28,7 @@ jobs:
 
       - name: Build, tag, and push image to Docker Hub
         run: |
-          cd ${{ env.FOLDER }}
+          cd $FOLDER
           docker build -t $TEAM/$REPOSITORY:$TAG_NAME .
           docker push $TEAM/$REPOSITORY:$TAG_NAME
 
