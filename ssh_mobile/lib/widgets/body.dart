@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ssh_mobile/constant.dart';
 
-import 'Categories.dart';
+
+import './categories_slider.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -9,22 +11,21 @@ class Body extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
-          child: Text(
-            "Categories",
-            style: Theme.of(context)
-                .textTheme
-                .headline5
-                .copyWith(fontWeight: FontWeight.bold),
-          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
+              child: Text(
+                "Categories",
+                style: GoogleFonts.montserrat()
+                    .copyWith(fontWeight: FontWeight.bold, fontSize: 25),
+              ),
+            ),
+          ],
         ),
-        Categories(),
-        Container(
-          height: 180,
-          width: 160,
-          decoration: BoxDecoration(color: Colors.blue),
-        )
+        CategoriesSlider()
       ],
     );
   }
