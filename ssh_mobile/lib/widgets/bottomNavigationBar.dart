@@ -1,25 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class BotNavBar extends StatefulWidget {
-  @override
-  _BotNavBarState createState() => _BotNavBarState();
-}
+class BotNavBar extends StatelessWidget {
+  BotNavBar({Key key, this.selectedIndex, this.onPageChange}) : super(key: key);
 
-class _BotNavBarState extends State<BotNavBar> {
-  int _selectedIndex = 0;
-  List<Widget> _widgetOptions = <Widget>[
-    Text('Home'), //can change from Text to class home when page home finish
-    Text('Cart'),
-    Text('Search'),
-    Text('Profile'),
-  ];
-
-  void _onItemTap(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  final selectedIndex;
+  final onPageChange;
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +19,10 @@ class _BotNavBarState extends State<BotNavBar> {
         BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
         BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
       ],
-      currentIndex: _selectedIndex,
+      currentIndex: selectedIndex,
       selectedLabelStyle: GoogleFonts.montserrat(),
       selectedItemColor: Color(0xFFFEC10E),
-      onTap: _onItemTap,
+      onTap: (index) => onPageChange(index),
     ));
   }
 }

@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ssh_mobile/widgets/body.dart';
-import 'package:ssh_mobile/widgets/bottomNavigationBar.dart';
 
-class HomeScreen extends StatelessWidget {
+class SSHAppBar extends StatefulWidget implements PreferredSizeWidget {
+  Size get preferredSize => const Size.fromHeight(65);
+
+  SSHAppBar({Key key, this.page}) : super(key: key);
+
+  final page;
+
+  @override
+  _SSHAppBarState createState() => _SSHAppBarState();
+}
+
+class _SSHAppBarState extends State<SSHAppBar> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: buildAppBar(),
-        body: Center(child: Body()),
-        bottomNavigationBar: BotNavBar(),
-      ),
-    );
-  }
-
-  AppBar buildAppBar() {
-    return (AppBar(
+    return AppBar(
         backgroundColor: Color(0xFFFEC10E),
         textTheme: TextTheme(headline6: TextStyle(color: Colors.black)),
         shape: RoundedRectangleBorder(
@@ -31,6 +30,6 @@ class HomeScreen extends StatelessWidget {
                   .copyWith(fontWeight: FontWeight.w900, fontSize: 36),
             ),
           ],
-        )));
+        ));
   }
 }
