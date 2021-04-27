@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ssh_mobile/constant.dart';
 
+
 import './categories_slider.dart';
 
 class Body extends StatelessWidget {
