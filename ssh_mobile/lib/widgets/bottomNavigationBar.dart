@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class BotNavBar extends StatefulWidget {
   @override
@@ -27,50 +28,14 @@ class _BotNavBarState extends State<BotNavBar> {
       type: BottomNavigationBarType.fixed,
       backgroundColor: Color(0xFF282424),
       items: [
-        BottomNavigationBarItem(
-          icon: Icon(
-            Icons.home,
-            color: _selectedIndex == 0 ? Color(0xFFFEC10E) : Colors.white54,
-          ),
-          title: Text(
-            'Home',
-            style: TextStyle(
-                color:
-                    _selectedIndex == 0 ? Color(0xFFFEC10E) : Colors.white54),
-          ),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart,
-              color: _selectedIndex == 1 ? Color(0xFFFEC10E) : Colors.white54),
-          title: Text(
-            'Cart',
-            style: TextStyle(
-                color:
-                    _selectedIndex == 1 ? Color(0xFFFEC10E) : Colors.white54),
-          ),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.search,
-              color: _selectedIndex == 2 ? Color(0xFFFEC10E) : Colors.white54),
-          title: Text(
-            'Search',
-            style: TextStyle(
-                color:
-                    _selectedIndex == 2 ? Color(0xFFFEC10E) : Colors.white54),
-          ),
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person,
-              color: _selectedIndex == 3 ? Color(0xFFFEC10E) : Colors.white54),
-          title: Text(
-            'Profile',
-            style: TextStyle(
-                color:
-                    _selectedIndex == 3 ? Color(0xFFFEC10E) : Colors.white54),
-          ),
-        ),
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
+        BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
       ],
       currentIndex: _selectedIndex,
+      selectedLabelStyle: GoogleFonts.montserrat(),
+      selectedItemColor: Color(0xFFFEC10E),
       onTap: _onItemTap,
     ));
   }
