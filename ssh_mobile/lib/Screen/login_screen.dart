@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ssh_mobile/Screen/Home_Screen.dart';
 
 // import '../providers/auth.dart';
 
@@ -64,8 +65,9 @@ class _LoginPageState extends State<LoginPage> {
         body: Center(
             child: Container(
                 constraints: BoxConstraints.expand(),
-                decoration:
-                    BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/LoginWallpaper.jpg'))),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/LoginWallpaper.jpg'))),
                 child: Padding(
                     padding: const EdgeInsets.all(36.0),
                     child: Column(

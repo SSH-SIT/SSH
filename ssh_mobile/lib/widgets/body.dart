@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ssh_mobile/Component/Categories.dart';
 import 'package:ssh_mobile/constant.dart';
-
-import 'Categories.dart';
 
 class Body extends StatelessWidget {
   @override
