@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ssh_mobile/Component/BotNavBar.dart';
 import 'package:ssh_mobile/constant.dart';
 
 class Body extends StatelessWidget {
@@ -11,7 +10,7 @@ class Body extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
           child: Text(
-            "Catagories",
+            "Categories",
             style: Theme.of(context)
                 .textTheme
                 .headline5

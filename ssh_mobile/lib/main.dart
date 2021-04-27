@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'Screen/Home_Screen.dart';
+import './screen/home_screen.dart';
+import './screen/login_screen.dart';
 import 'constant.dart';
 
 void main() {
@@ -12,12 +13,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'SSH',
       theme: ThemeData(
         textTheme: Theme.of(context).textTheme.apply(bodyColor: kTextColor),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomeScreen(),
+      home: LoginPage(),
     );
   }
 }
