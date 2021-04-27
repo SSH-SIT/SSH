@@ -2,7 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ssh_mobile/screen/home_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:ssh_mobile/providers/auth.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -17,6 +18,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    Auth auth = Provider.of<Auth>(context);
+
     final userNameField = TextField(
       obscureText: false,
       style: GoogleFonts.montserrat().copyWith(
@@ -52,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          auth.login();
         },
         child: Text("Login",
             textAlign: TextAlign.center,

@@ -5,7 +5,7 @@ class Auth with ChangeNotifier {
   String _userID;
 
   bool get isAuth {
-    return false;
+    return _token != null;
   }
 
   String get token {
@@ -14,5 +14,10 @@ class Auth with ChangeNotifier {
 
   String get userID {
     return _userID;
+  }
+
+  login() {
+    _token = 'Login Success';
+    notifyListeners();
   }
 }
