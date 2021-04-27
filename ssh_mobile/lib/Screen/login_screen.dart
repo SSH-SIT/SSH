@@ -1,13 +1,16 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+<<<<<<< SSH_mobile/fix_conflict
 import 'package:ssh_mobile/Screen/Home_Screen.dart';
 
 // import '../providers/auth.dart';
 
 import '../models/http_exception.dart';
+=======
+import 'package:ssh_mobile/screen/home_screen.dart';
+>>>>>>> develop
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -17,6 +20,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final userNameField = TextField(
@@ -31,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(25.0),
               borderSide: BorderSide(color: Color(0xffFEC10E)))),
+      controller: _usernameController,
     );
     final passwordField = TextField(
       obscureText: true,
@@ -43,6 +50,7 @@ class _LoginPageState extends State<LoginPage> {
           hintText: "Password",
           border:
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
+      controller: _passwordController,
     );
     final loginButon = Material(
       elevation: 5.0,
@@ -51,7 +59,9 @@ class _LoginPageState extends State<LoginPage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+        },
         child: Text("Login",
             textAlign: TextAlign.center,
             style: GoogleFonts.montserrat().copyWith(
@@ -77,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 155.0,
                           child: Image.asset(
-                            "assets/logo.png",
+                            "assets/images/SSHicon.png",
                             fit: BoxFit.contain,
                           ),
                         ),
