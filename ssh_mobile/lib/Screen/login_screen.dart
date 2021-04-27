@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:ssh_mobile/screen/home_screen.dart'
+import 'package:ssh_mobile/screen/home_screen.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -53,7 +53,8 @@ class _LoginPageState extends State<LoginPage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomeScreen()));
         },
         child: Text("Login",
             textAlign: TextAlign.center,
