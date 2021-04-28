@@ -3,7 +3,7 @@ const Router = express.Router();
 
 const UserRoutes = require("./user-routes");
 const AdminRoutes = require("./admin-routes");
-const ProductRoutes = require("./admin-routes");
+const ProductRoutes = require("./product-routes");
 
 Router.use(UserRoutes);
 
