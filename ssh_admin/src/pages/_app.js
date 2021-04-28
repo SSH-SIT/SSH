@@ -18,6 +18,7 @@ function MyApp({ Component, pageProps }) {
             <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             <link rel="preconnect" href="https://fonts.gstatic.com" />
             <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,500;1,300;1,500&display=swap" rel="stylesheet" />
+            <link rel="icon" href={`SSHicon.png`} />
           </Head>
           <Component {...pageProps} />
         </CssBaseline>
