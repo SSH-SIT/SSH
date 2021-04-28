@@ -10,7 +10,6 @@ if (process.env.NODE_ENV !== 'production')
 
 const app = express()
 
-
 app.use(routes)
 
 app.use(express.json())
