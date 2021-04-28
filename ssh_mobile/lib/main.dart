@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ssh_mobile/widgets/bottomNavigationBar.dart';
-import './screen/login_screen.dart';
 
 import './widgets/appbar.dart';
+import 'package:ssh_mobile/widgets/bottomNavigationBar.dart';
+
+import 'package:ssh_mobile/Screen/product_page.dart';
+import './screen/login_screen.dart';
 
 import 'package:provider/provider.dart';
 import './providers/auth.dart';
@@ -28,7 +30,7 @@ class SSH extends StatefulWidget {
 
 class _SSHstate extends State<SSH> {
   List<Widget> _widgetOptions = [
-    Text('Yo1'),
+    ProductPage(),
     Text('Yo2'),
     Text('Yo3'),
     Text('Yo4'),
