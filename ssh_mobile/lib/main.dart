@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ssh_mobile/Screen/product_page.dart';
-
-import 'package:ssh_mobile/widgets/bottomNavigationBar.dart';
-import './screen/login_screen.dart';
 
 import './widgets/appbar.dart';
+import 'package:ssh_mobile/widgets/bottomNavigationBar.dart';
+
+import 'package:ssh_mobile/Screen/product_page.dart';
+import './screen/login_screen.dart';
 
 import 'package:provider/provider.dart';
 import './providers/auth.dart';
