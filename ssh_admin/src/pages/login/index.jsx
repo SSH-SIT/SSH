@@ -7,12 +7,42 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Image from "next/image";
 
+import API from "../../api/path";
+
+import { useStoreActions, useStoreState } from "../../store";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { useLoaded } from "../../utils/Loader";
 
-export default function Login() {
+export default function Login({}) {
   const router = useRouter();
   const loaded = useLoaded();
+  const admin = useStoreState((s) => s.adminState.admin);
+  const setAdmin = useStoreActions((a) => a.adminState.set);
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+  const [errMsg, setErrMsg] = useState("");
+
+  function onChange(e) {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  }
+
+  async function onLogin() {
+    if (user.email === "" || user.password === "")
+      setErrMsg("Please fill email or password.");
+    else {
+      const res = await API.admin.login(user.email, user.password);
+      if (res) {
+        if (res.status === 200) setAdmin(res.data);
+        else if (res.response.status === 400)
+          setErrMsg("Email or Password is incorrect.");
+      }
+    }
+  }
+
+  if (admin) router.push("/dashboard");
 
   return (
     loaded && (
@@ -38,7 +68,11 @@ export default function Login() {
           }}
         >
           <Grid
-            style={{ width: "100%", flexDirection: "column", display: "flex" }}
+            style={{
+              width: "100%",
+              flexDirection: "column",
+              display: "flex",
+            }}
           >
             <Grid
               container
@@ -62,6 +96,8 @@ export default function Login() {
               variant="filled"
               label="Email Address"
               name="email"
+              value={user.email}
+              onChange={onChange}
             />
 
             <TextField
@@ -70,6 +106,8 @@ export default function Login() {
               name="password"
               label="Password"
               type="password"
+              value={user.password}
+              onChange={onChange}
             />
             <Grid
               container
@@ -80,8 +118,16 @@ export default function Login() {
               <Checkbox defaultChecked color="primary" />
               <Typography>Remember Me</Typography>
             </Grid>
+            <Grid
+              container
+              justify="flex-start"
+              direction="row"
+              alignItems="center"
+            >
+              <Typography>{errMsg}</Typography>
+            </Grid>
             <Button
-              onClick={() => router.push("/dashboard")}
+              onClick={onLogin}
               style={{ width: "40%", margin: "20px auto" }}
               variant="contained"
               color="primary"
@@ -93,7 +139,11 @@ export default function Login() {
                 <Typography color="primary">Forgot password?</Typography>
               </Grid>
               <Grid item>
-                <Typography color="primary">
+                <Typography
+                  color="primary"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => router.push("/signup")}
+                >
                   Don't have an account? Sign Up
                 </Typography>
               </Grid>

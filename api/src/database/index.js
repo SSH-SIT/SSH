@@ -1,7 +1,5 @@
 const knex = require("knex");
 
-console.log(process.env);
-
 const config = {
   client: "pg",
   connection: {
