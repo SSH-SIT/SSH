@@ -3,6 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ssh_mobile/constant.dart';
 
 class CategoriesSlider extends StatefulWidget {
+  CategoriesSlider({Key key, this.productIndex, this.onPageChange})
+      : super(key: key);
+  final productIndex;
+  final onPageChange;
   @override
   _CategoriesSliderState createState() => _CategoriesSliderState();
 }
@@ -14,6 +18,7 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
     "Clit Suction Toys",
     "Dildos"
   ];
+
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -24,16 +29,18 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
         child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: categories.length,
-            itemBuilder: (context, index) => buildCategory(index)),
+            itemBuilder: (context, index) =>
+                buildCategory(index, widget.onPageChange)),
       ),
     );
   }
 
-  Widget buildCategory(int index) {
+  Widget buildCategory(int index1, final onCatChange) {
     return GestureDetector(
       onTap: () {
+        onCatChange(index1);
         setState(() {
-          selectedIndex = index;
+          selectedIndex = index1;
         });
       },
       child: Padding(
@@ -42,17 +49,18 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              categories[index],
+              categories[index1],
               style: GoogleFonts.montserrat().copyWith(
                 fontWeight: FontWeight.bold,
-                color: selectedIndex == index ? kTextColor : kTextLightColor,
+                color: selectedIndex == index1 ? kTextColor : kTextLightColor,
               ),
             ),
             Container(
               margin: EdgeInsets.only(top: kDefaultPaddin / 4), // top padding
               height: 2,
               width: 30,
-              color: selectedIndex == index ? Colors.black : Colors.transparent,
+              color:
+                  selectedIndex == index1 ? Colors.black : Colors.transparent,
             )
           ],
         ),

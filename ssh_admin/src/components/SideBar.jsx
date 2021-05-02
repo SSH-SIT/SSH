@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-  }
+  },
 }));
 
 export default function SideBar({ children }) {
@@ -30,7 +30,7 @@ export default function SideBar({ children }) {
 
   return (
     loaded && (
-      <>
+      <div style={{ display: "flex" }}>
         <Drawer
           className={classes.drawer}
           variant="permanent"
@@ -67,8 +67,8 @@ export default function SideBar({ children }) {
             </ListItem>
           </List>
         </Drawer>
-        <Grid>{children}</Grid>
-      </>
+        <Grid style={{ width: "100%" }}>{children}</Grid>
+      </div>
     )
   );
 }

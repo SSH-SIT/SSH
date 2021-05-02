@@ -1,11 +1,12 @@
 import { AppBar, Toolbar, Grid, Typography, Button } from "@material-ui/core";
 import { ExitToApp } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
+import SideBar from "./SideBar";
 
 import { useRouter } from "next/router";
 import { useLoaded } from "../utils/Loader";
 
-import SideBar from "./SideBar";
+import { useStoreActions, useStoreState } from "../store";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -18,6 +19,14 @@ export default function NavBar({ children }) {
   const loaded = useLoaded();
   const classes = useStyles();
   const router = useRouter();
+  const admin = useStoreState((s) => s.adminState.admin);
+  const setAdmin = useStoreActions((a) => a.adminState.set);
+
+  function onLogOut() {
+    setAdmin(null);
+  }
+
+  if (!admin) router.push("/login");
 
   return (
     loaded && (
@@ -40,7 +49,7 @@ export default function NavBar({ children }) {
               size="large"
               variant="outlined"
               startIcon={<ExitToApp />}
-              onClick={() => router.push("/login")}
+              onClick={onLogOut}
             >
               LogOut
             </Button>

@@ -1,7 +1,9 @@
-import products from './products'
-import admin from './admin'
+import products from "./products";
+import admin from "./admin";
+import util from "./util";
 
 export default {
-    products,
-    admin
-}
+  products,
+  admin,
+  util,
+};
