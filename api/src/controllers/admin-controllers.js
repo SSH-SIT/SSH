@@ -20,7 +20,7 @@ const Login = async (req, res) => {
     );
 
     await knex("admin_token").insert({
-      admin_id: admin[0].id,
+      admin_id: admin[0].admin_id,
       token,
     });
 
@@ -71,7 +71,7 @@ const SignUp = async (req, res) => {
 
     const registeredInfo = await knex("admin").insert(admin).returning("*");
     await knex("admin_token").insert({
-      admin_id: registeredInfo[0].id,
+      admin_id: registeredInfo[0].admin_id,
       token,
     });
 
