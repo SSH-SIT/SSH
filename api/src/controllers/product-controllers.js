@@ -174,7 +174,7 @@ const searchProduct = async (req, res) => {
       }
     ).where('product.pname', 'LIKE', `%${evidence}%`)
 
-    const productFromCategories = await Knex('product_type')const product = await Knex("product")
+    const productFromCategories = await Knex('product_type')
     .fullOuterJoin("product_picture", {
       "product.pid": "product_picture.pid",
     }).where('product_type.type_name', 'LIKE', `%${evidence}%`)
