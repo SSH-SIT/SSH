@@ -6,7 +6,7 @@ const Login = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const admin = await knex("Admin").where({ username }).select();
+    const admin = await knex("admin").where({ username }).select();
     const isPasswordMatch = await bcrypt.compare(password, admin[0].password);
 
     if (admin.length === 0 || !isPasswordMatch)
@@ -19,7 +19,7 @@ const Login = async (req, res) => {
       process.env.SECRET_KEY
     );
 
-    await knex("Admin_Token").insert({
+    await knex("admin_token").insert({
       admin_id: admin[0].id,
       token,
     });
@@ -40,14 +40,14 @@ const LogOut = async (req, res) => {
     const token = req.headers.authorization.replace("Bearer ", "");
 
     const decoded = JWT.verify(token, process.env.SECRET_KEY);
-    const admin = await knex("Admin")
+    const admin = await knex("admin")
       .where({ username: decoded.username })
       .select();
 
     if (admin.length === 0)
       return res.status(401).send({ msg: "Invalid Token." });
 
-    await knex("Admin_Token").where({ token }).delete();
+    await knex("admin_token").where({ token }).delete();
 
     return res.status(200).send({ msg: "Log Out Success" });
   } catch (err) {
@@ -69,8 +69,8 @@ const SignUp = async (req, res) => {
       process.env.SECRET_KEY
     );
 
-    const registeredInfo = await knex("Admin").insert(admin).returning("*");
-    await knex("Admin_Token").insert({
+    const registeredInfo = await knex("admin").insert(admin).returning("*");
+    await knex("admin_token").insert({
       admin_id: registeredInfo[0].id,
       token,
     });

@@ -3,9 +3,9 @@ const Knex = require('../database/')
 // GET Method
 const getUsers = async (req, res) => {
     try {
-        const users = await Knex("User")
-            .innerJoin("Address", {
-                'User.uid': 'Address.uid'
+        const users = await Knex("user")
+            .innerJoin("address", {
+                'user.uid': 'address.uid'
             }).select('*')
 
         return res.status(200).send(users)
@@ -22,9 +22,9 @@ const getOneUsers = async (req, res) => {
         const {
             id
         } = req.params
-        const users = await Knex("User")
-            .innerJoin("Address", {
-                'User.uid': 'Address.uid'
+        const users = await Knex("user")
+            .innerJoin("address", {
+                'user.uid': 'address.uid'
             }).where({
                 uid: id
             }).select('*')

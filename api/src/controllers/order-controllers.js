@@ -5,11 +5,11 @@ const getOrder = async (req, res) => {
         const {
             id
         } = req.params
-        const users = await Knex("Order")
-            .innerJoin("Order_Detail", {
-                'Order.order_id': 'Order_Detail.order_id'
+        const users = await Knex("order")
+            .innerJoin("order_details", {
+                'order.order_id': 'order_details.order_id'
             }).where({
-                'Order.uid': id
+                'order.uid': id
             }).select('*')
 
         return res.status(200).send(users)
@@ -25,9 +25,9 @@ const getOneOrder = async (req, res) => {
         const {
             id
         } = req.params
-        const users = await Knex("Order")
-            .innerJoin("Order_Detail", {
-                'Order.order_id': 'Order_Detail.order_id'
+        const users = await Knex("order")
+            .innerJoin("order_details", {
+                'order.order_id': 'order_details.order_id'
             }).where({
                 'Order.order_id': order_id
             }).select('*')
@@ -46,12 +46,12 @@ const getOneOrderFromUserID = async (req, res) => {
             id,
             order_id
         } = req.params
-        const users = await Knex("Order")
-            .innerJoin("Order_Detail", {
-                'Order.order_id': 'Order_Detail.order_id'
+        const users = await Knex("order")
+            .innerJoin("order_details", {
+                'order.order_id': 'order_details.order_id'
             }).where({
-                'Order.uid': id,
-                'Order.order_id': order_id
+                'order.uid': id,
+                'order.order_id': order_id
             }).select('*')
 
         return res.status(200).send(users)
