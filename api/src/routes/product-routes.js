@@ -16,6 +16,7 @@ const {
   createProduct,
   updateProduct,
   deleteProduct,
+  searchProduct,
 } = require("../controllers/product-controllers");
 
 Router.get("/product", getProduct);
@@ -23,5 +24,6 @@ Router.get("/product/:pid", getOneProduct);
 Router.post("/product", upload.single("product_picture"), createProduct);
 Router.patch("/product/:pid", upload.single("product_picture"), updateProduct);
 Router.delete("/product/:pid", deleteProduct);
+Router.post("/product/search", searchProduct);
 
 module.exports = Router;
