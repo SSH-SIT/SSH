@@ -6,7 +6,7 @@ const AdminRoutes = require("./admin-routes");
 const ProductRoutes = require("./product-routes");
 const UtilRoutes = require("./util-routes");
 
-Router.use(UserRoutes);
+Router.use('/users', UserRoutes);
 
 Router.use(ProductRoutes);
 

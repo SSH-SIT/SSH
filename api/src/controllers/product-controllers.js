@@ -163,10 +163,44 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const searchProduct = async (req, res) => {
+  try {
+    const { evidence } = req.body;
+
+    const productFromName = await Knex("product").fullOuterJoin(
+      "product_picture",
+      {
+        "product.pid": "product_picture.pid",
+      }
+    ).where('product.pname', 'LIKE', `%${evidence}%`)
+
+    const productFromCategories = await Knex('product_type')const product = await Knex("product")
+    .fullOuterJoin("product_picture", {
+      "product.pid": "product_picture.pid",
+    }).where('product_type.type_name', 'LIKE', `%${evidence}%`)
+
+    const results = [productFromCategories, productFromName]
+
+    return res.status(200).send(results);
+  } catch (err) {
+    return res.status(400).send({ msg: err.message });
+  }
+};
+
+const getProductFromFiltered = async (req, res) => {
+  try {
+    const {} = req.body;
+  } catch (err) {
+    return res.status(400).send({ msg: err.message });
+  }
+};
+
 module.exports = {
   getProduct,
   getOneProduct,
   createProduct,
   updateProduct,
   deleteProduct,
+  searchProduct,
+  getProductFromFiltered
 };
