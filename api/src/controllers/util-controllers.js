@@ -2,7 +2,7 @@ const knex = require("../database");
 
 const getSaleOverview = async (req, res) => {
   try {
-    const orders = await knex("Order").select();
+    const orders = await knex("order").select();
     var groupByMonth = {
       0: 0,
       1: 0,
@@ -32,7 +32,7 @@ const getSaleOverview = async (req, res) => {
 
 const topSellerProduct = async (req, res) => {
   try {
-    const datas = await knex("Order")
+    const datas = await knex("order")
       .select(knex.raw(`order_id, uid, date_part('month', date) as month`))
       .groupByRaw("month")
       .groupBy("order_id");

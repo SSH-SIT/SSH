@@ -3,15 +3,15 @@ const sharp = require("sharp");
 
 const getProduct = async (req, res) => {
   try {
-    const product = await Knex("Product")
-      .fullOuterJoin("Product_Picture", {
-        "Product.pid": "Product_Picture.pid",
+    const product = await Knex("product")
+      .fullOuterJoin("product_picture", {
+        "product.pid": "product_picture.pid",
       })
-      .fullOuterJoin("Product_Type", {
-        "Product_Type.type_ID": "Product.type_id",
+      .innerJoin("product_type", {
+        "product_type.type_id": "product.type_id",
       })
-      .select("*")
-      .orderBy("Product.pid", "asc");
+      .select("*", "product_type.type_name")
+      .orderBy("product.pid", "asc");
 
     return res.status(200).send(product);
   } catch (err) {
@@ -25,18 +25,18 @@ const getOneProduct = async (req, res) => {
   try {
     const { pid } = req.params;
 
-    const product = await Knex("Prodcut")
-      .fullOuterJoin("Product_picture", {
-        "Product.pid": "Product_Picture.pid",
+    const product = await Knex("product")
+      .fullOuterJoin("product_picture", {
+        "product.pid": "product_picture.pid",
       })
-      .fullOuterJoin("Product_Type", {
-        "Product_Type.type_id": "Product.type_id",
+      .innerJoin("product_type", {
+        "product_type.type_id": "product.type_id",
       })
       .where({
-        pid: pid,
+        "product.pid": pid,
       })
-      .select("*")
-      .orderBy("Product.pid", "asc");
+      .select("*", "product_type.type_name", "product.pid")
+      .orderBy("product.pid", "asc");
     return res.status(200).send(product);
   } catch (err) {
     return res.status(400).send({
@@ -68,17 +68,17 @@ const createProduct = async (req, res) => {
         .toBuffer();
     }
 
-    const returnedID = await Knex("Product")
+    const returnedID = await Knex("product")
       .insert({
         type_id,
         pname,
         price,
         description,
       })
-      .returning("PID");
+      .returning("pid");
     const pid = returnedID[0];
 
-    await Knex("Product_Picture").insert({
+    await Knex("product_picture").insert({
       pid,
       picture: productPicBuffer,
     });
@@ -128,14 +128,14 @@ const updateProduct = async (req, res) => {
       price !== null ||
       description !== null
     ) {
-      await Knex("Product")
+      await Knex("product")
         .insert(updatedProductTable)
         .onConflict("pid")
         .merge(["pid", "type_id", "p_name", "price", "description"]);
     }
 
     if (product_picture) {
-      await Knex("Product_Picture")
+      await Knex("product_picture")
         .insert({
           pid,
           picture: productPicBuffer,
@@ -154,8 +154,8 @@ const deleteProduct = async (req, res) => {
   try {
     const { pid } = req.params;
 
-    await Knex("Product_Picture").where({ pid }).delete();
-    await Knex("Product").where({ pid }).delete();
+    await Knex("product_picture").where({ pid }).delete();
+    await Knex("product").where({ pid }).delete();
 
     return res.status(200).send({ msg: "Delete Product Successful." });
   } catch (err) {
