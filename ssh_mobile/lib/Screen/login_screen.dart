@@ -9,6 +9,8 @@ import 'package:ssh_mobile/providers/auth.dart';
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
 
+  static const routeName = '/login';
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
