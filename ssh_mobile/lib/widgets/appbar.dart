@@ -17,19 +17,14 @@ class _SSHAppBarState extends State<SSHAppBar> {
   Widget build(BuildContext context) {
     return AppBar(
         backgroundColor: Color(0xFFFEC10E),
+        // shadowColor: ,
         textTheme: TextTheme(headline6: TextStyle(color: Colors.black)),
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              "SSH",
-              style: GoogleFonts.montserrat()
-                  .copyWith(fontWeight: FontWeight.w900, fontSize: 36),
-            ),
-          ],
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(17))),
+        title: Text(
+          "SSH",
+          style: GoogleFonts.montserrat()
+              .copyWith(fontWeight: FontWeight.bold, fontSize: 50, letterSpacing: 10),
         ));
   }
 }
