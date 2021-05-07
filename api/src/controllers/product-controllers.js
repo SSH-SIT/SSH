@@ -48,10 +48,8 @@ const getOneProduct = async (req, res) => {
 const createProduct = async (req, res) => {
   try {
     const productInfo = JSON.parse(req.body.productInfo);
-    const product_picture = req.files !== undefined ? req.files.buffer : null;
+    const product_picture = req.file !== undefined ? req.file.buffer : null;
     var productPicBuffer;
-  
-    console.log(product_picture)
 
     const {
       type_id = null,
@@ -66,7 +64,6 @@ const createProduct = async (req, res) => {
         .resize({ width: 250, height: 250 })
         .png()
         .toBuffer();
-      console.log("Yes, You have sent a picture.");
     }
 
     const returnedID = await Knex("product")
@@ -95,7 +92,7 @@ const updateProduct = async (req, res) => {
   try {
     const { pid } = req.params;
     const productInfo = JSON.parse(req.body.productInfo);
-    const product_picture = req.files !== undefined ? req.files.buffer : null;
+    const product_picture = req.file !== undefined ? req.file.buffer : null;
     var productPicBuffer;
 
     const {
@@ -111,7 +108,6 @@ const updateProduct = async (req, res) => {
         .resize({ width: 250, height: 250 })
         .png()
         .toBuffer();
-      console.log("Yes, You have sent a picture.");
     }
 
     const updatedProductTable = {
@@ -131,10 +127,18 @@ const updateProduct = async (req, res) => {
       description !== null ||
       color !== null
     ) {
+      var merge = ["pid"];
+
+      type_id ? merge.push("type_id") : null;
+      pname ? merge.push("pname") : null;
+      price ? merge.push("price") : null;
+      description ? merge.push("description") : null;
+      color ? merge.push("color") : null;
+
       await Knex("product")
         .insert(updatedProductTable)
         .onConflict("pid")
-        .merge(["pid", "type_id", "pname", "price", "description", "color"]);
+        .merge(merge);
     }
 
     if (product_picture) {
@@ -174,15 +178,21 @@ const searchProduct = async (req, res) => {
       .fullOuterJoin("product_picture", {
         "product.pid": "product_picture.pid",
       })
-      .where("product.pname", "LIKE", `%${evidence}%`);
+      .where(Knex.raw(`LOWER(product.pname) LIKE LOWER('%${evidence}%')`));
 
     const productFromCategories = await Knex("product_type")
+      .innerJoin("product", {
+        "product.type_id": "product_type.type_id",
+      })
       .fullOuterJoin("product_picture", {
         "product.pid": "product_picture.pid",
       })
-      .where("product_type.type_name", "LIKE", `%${evidence}%`);
+      .select("*")
+      .where(
+        Knex.raw(`LOWER(product_type.type_name) LIKE LOWER('%${evidence}%')`)
+      );
 
-    const results = [productFromCategories, productFromName];
+    const results = [...productFromName, ...productFromCategories];
 
     return res.status(200).send(results);
   } catch (err) {
