@@ -50,6 +50,8 @@ const createProduct = async (req, res) => {
     const productInfo = JSON.parse(req.body.productInfo);
     const product_picture = req.files !== undefined ? req.files.buffer : null;
     var productPicBuffer;
+  
+    console.log(product_picture)
 
     const {
       type_id = null,
