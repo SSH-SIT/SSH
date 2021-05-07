@@ -10,7 +10,7 @@ const getProduct = async (req, res) => {
       .innerJoin("product_type", {
         "product_type.type_id": "product.type_id",
       })
-      .select("*", "product_type.type_name")
+      .select("*", "product_type.type_name", "product.pid")
       .orderBy("product.pid", "asc");
 
     return res.status(200).send(product);
@@ -56,6 +56,7 @@ const createProduct = async (req, res) => {
       pname = null,
       price = null,
       description = null,
+      color = null,
     } = productInfo;
 
     if (product_picture) {
@@ -63,6 +64,7 @@ const createProduct = async (req, res) => {
         .resize({ width: 250, height: 250 })
         .png()
         .toBuffer();
+      console.log("Yes, You have sent a picture.");
     }
 
     const returnedID = await Knex("product")
@@ -71,6 +73,7 @@ const createProduct = async (req, res) => {
         pname,
         price,
         description,
+        color,
       })
       .returning("pid");
     const pid = returnedID[0];
@@ -98,6 +101,7 @@ const updateProduct = async (req, res) => {
       pname = null,
       price = null,
       description = null,
+      color = null,
     } = productInfo;
 
     if (product_picture) {
@@ -105,6 +109,7 @@ const updateProduct = async (req, res) => {
         .resize({ width: 250, height: 250 })
         .png()
         .toBuffer();
+      console.log("Yes, You have sent a picture.");
     }
 
     const updatedProductTable = {
@@ -115,17 +120,19 @@ const updateProduct = async (req, res) => {
     pname ? (updatedProductTable["pname"] = pname) : null;
     price ? (updatedProductTable["price"] = price) : null;
     description ? (updatedProductTable["description"] = description) : null;
+    color ? (updatedProductTable["color"] = color) : null;
 
     if (
       type_id !== null ||
       pname !== null ||
       price !== null ||
-      description !== null
+      description !== null ||
+      color !== null
     ) {
       await Knex("product")
         .insert(updatedProductTable)
         .onConflict("pid")
-        .merge(["pid", "type_id", "p_name", "price", "description"]);
+        .merge(["pid", "type_id", "pname", "price", "description", "color"]);
     }
 
     if (product_picture) {
