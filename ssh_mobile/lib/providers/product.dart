@@ -2,8 +2,7 @@ class Product {
   final String pname, description, color, type, gender;
   final int pid, typeID;
   final double price;
-  // final ByteBuffer image;
-  final String image;
+  final picture;
 
   Product(
       {this.pid,
@@ -14,5 +13,5 @@ class Product {
       this.type,
       this.typeID,
       this.gender,
-      this.image});
+      this.picture});
 }

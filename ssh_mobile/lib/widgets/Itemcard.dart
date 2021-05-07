@@ -1,8 +1,11 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 import '../screen/product_details.dart';
 
-import '../providers/products.dart';
+// import '../providers/products.dart';
 import '../providers/product.dart';
 
 import '../constant.dart';
@@ -20,20 +23,20 @@ class Itemcard extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: GestureDetector(
-              onTap: () {
-                Navigator.of(context)
-                    .pushNamed(ProductDetails.routeName, arguments: {
-                  'pid': product.pid,
-                });
-              },
-              child: Container(
+            onTap: () {
+              Navigator.of(context)
+                  .pushNamed(ProductDetails.routeName, arguments: {
+                'pid': product.pid,
+              });
+            },
+            child: Container(
                 padding: EdgeInsets.all(kDefaultPaddin),
                 decoration: BoxDecoration(
-                  color: Color(0xFF + int.parse(product.color)),
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: Image.asset(product.image),
-              )),
+                child:
+                    Image.memory(Uint8List.fromList(product.picture.toList()))),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: kDefaultPaddin / 4),
