@@ -91,7 +91,16 @@ const createProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const { pid } = req.params;
-    const productInfo = JSON.parse(req.body.productInfo);
+    const productInfo =
+      req.body.productInfo !== undefined
+        ? JSON.parse(req.body.productInfo)
+        : {
+            type_id: null,
+            pname: null,
+            price: null,
+            description: null,
+            color: null,
+          };
     const product_picture = req.file !== undefined ? req.file.buffer : null;
     var productPicBuffer;
 
