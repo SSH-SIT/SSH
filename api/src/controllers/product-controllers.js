@@ -48,10 +48,7 @@ const getOneProduct = async (req, res) => {
 const createProduct = async (req, res) => {
   try {
     const productInfo = JSON.parse(req.body.productInfo);
-    const product_picture =
-      req.files["product_picture"] !== undefined
-        ? req.files["product_picture"]
-        : null;
+    const product_picture = req.files !== undefined ? req.files.buffer : null;
     var productPicBuffer;
 
     const {
@@ -93,10 +90,7 @@ const updateProduct = async (req, res) => {
   try {
     const { pid } = req.params;
     const productInfo = JSON.parse(req.body.productInfo);
-    const product_picture =
-      req.files["product_picture"] !== undefined
-        ? req.files["product_picture"]
-        : null;
+    const product_picture = req.files !== undefined ? req.files.buffer : null;
     var productPicBuffer;
 
     const {
@@ -167,19 +161,19 @@ const searchProduct = async (req, res) => {
   try {
     const { evidence } = req.body;
 
-    const productFromName = await Knex("product").fullOuterJoin(
-      "product_picture",
-      {
+    const productFromName = await Knex("product")
+      .fullOuterJoin("product_picture", {
         "product.pid": "product_picture.pid",
-      }
-    ).where('product.pname', 'LIKE', `%${evidence}%`)
+      })
+      .where("product.pname", "LIKE", `%${evidence}%`);
 
-    const productFromCategories = await Knex('product_type')
-    .fullOuterJoin("product_picture", {
-      "product.pid": "product_picture.pid",
-    }).where('product_type.type_name', 'LIKE', `%${evidence}%`)
+    const productFromCategories = await Knex("product_type")
+      .fullOuterJoin("product_picture", {
+        "product.pid": "product_picture.pid",
+      })
+      .where("product_type.type_name", "LIKE", `%${evidence}%`);
 
-    const results = [productFromCategories, productFromName]
+    const results = [productFromCategories, productFromName];
 
     return res.status(200).send(results);
   } catch (err) {
@@ -202,5 +196,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   searchProduct,
-  getProductFromFiltered
+  getProductFromFiltered,
 };
