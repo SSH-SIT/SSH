@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:ssh_mobile/providers/products.dart';
 
-import 'package:ssh_mobile/screen/cart.dart';
-import 'package:ssh_mobile/screen/product.dart';
-import 'package:ssh_mobile/screen/product_details.dart';
-import 'package:ssh_mobile/screen/profile.dart';
-import 'package:ssh_mobile/screen/order.dart';
-import 'package:ssh_mobile/screen/search.dart';
-
-import './widgets/appbar.dart';
-import 'package:ssh_mobile/widgets/bottomNavigationBar.dart';
+import './screen/cart.dart';
+import './screen/product.dart';
+import './screen/product_details.dart';
+import './screen/profile.dart';
+import './screen/order.dart';
+import './screen/search.dart';
 
 import './screen/login_screen.dart';
 
 import 'package:provider/provider.dart';
 import './providers/auth.dart';
 import './providers/cart.dart';
+import './providers/products.dart';
 
 import 'constant.dart';
 
@@ -45,17 +44,11 @@ class _SSHstate extends State<SSH> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _widgetOptions = [
-      ProductPage(selectedIndex: selectedIndex, onPageChange: onPageChange),
-      Cart(),
-      Search(),
-      Profile(),
-    ];
-
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (ctx) => Auth()),
-          ChangeNotifierProvider(create: (ctx) => CartProvider())
+          ChangeNotifierProvider(create: (ctx) => CartProvider()),
+          ChangeNotifierProvider(create: (ctx) => Products())
         ],
         child: Consumer<Auth>(
           builder: (context, auth, child) => MaterialApp(

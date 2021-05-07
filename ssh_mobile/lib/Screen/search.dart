@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ssh_mobile/widgets/appbar.dart';
-import 'package:ssh_mobile/widgets/bottomNavigationBar.dart';
+import '../widgets/appbar.dart';
+import '../widgets/bottomNavigationBar.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
@@ -41,7 +41,7 @@ class Search extends StatelessWidget {
               ),
               Expanded(
                   child: ListView.builder(
-                      // itemCount: 0,
+                      itemCount: 0,
                       itemBuilder: (context, index) => Container()))
             ]),
           )),

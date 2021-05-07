@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:provider/provider.dart';
-import 'package:ssh_mobile/providers/auth.dart';
+import '../providers/auth.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -70,12 +70,13 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     return Scaffold(
-        body: Center(
-            child: Container(
-                constraints: BoxConstraints.expand(),
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/LoginWallpaper.jpg'))),
+        resizeToAvoidBottomInset: false,
+        body: Container(
+            constraints: BoxConstraints.expand(),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/images/LoginWallpaper.jpg'))),
+            child: SingleChildScrollView(
                 child: Padding(
                     padding: const EdgeInsets.all(36.0),
                     child: Column(

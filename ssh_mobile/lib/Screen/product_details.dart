@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ssh_mobile/widgets/appbar.dart';
-import 'package:ssh_mobile/models/product.dart';
+import 'package:ssh_mobile/providers/products.dart';
+import '../widgets/appbar.dart';
 
 import 'package:provider/provider.dart';
 
 import '../providers/cart.dart';
+import '../providers/product.dart';
 
 class ProductDetails extends StatelessWidget {
   ProductDetails({Key key}) : super(key: key);
@@ -15,8 +16,8 @@ class ProductDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Map args = ModalRoute.of(context).settings.arguments;
-    Product product =
-        products.firstWhere((element) => element.id == args['id']);
+    Product product = Provider.of<Products>(context).findById(args['pid']);
+
     final cart = Provider.of<CartProvider>(context);
 
     return Scaffold(
@@ -43,7 +44,7 @@ class ProductDetails extends StatelessWidget {
                           alignment: Alignment.centerLeft,
                           child: Padding(
                               padding: EdgeInsets.only(top: 20),
-                              child: Text(product.name,
+                              child: Text(product.pname,
                                   style: GoogleFonts.montserrat().copyWith(
                                       fontSize: 25, letterSpacing: 1.2)))),
                       Align(
@@ -73,8 +74,7 @@ class ProductDetails extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(17)),
                               onPressed: () {
-                                cart.addItem(
-                                    product.id, product.price);
+                                cart.addItem(product.pid, product.price);
                                 Navigator.pop(context);
                               },
                               label: Text('Add to Cart',

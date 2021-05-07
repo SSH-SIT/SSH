@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ssh_mobile/constant.dart';
+import '../constant.dart';
 
 class CategoriesSlider extends StatefulWidget {
   CategoriesSlider({Key key, this.productIndex, this.onPageChange})
@@ -16,7 +16,15 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
     "Wand Vibrators",
     "Clitoral Vibrator",
     "Clit Suction Toys",
-    "Dildos"
+    "Dildos",
+    "Butt Plugs",
+    "G-spot Toys",
+    "A-spot Toys",
+    "Rabbit Vibrators",
+    "Prostate Toys",
+    "Anal Beads",
+    "Cock Rings",
+    "Glass and Metal Wands"
   ];
 
   int selectedIndex = 0;

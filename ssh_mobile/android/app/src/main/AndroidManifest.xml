@@ -2,7 +2,9 @@
     package="com.example.ssh_mobile">
    <application
         android:label="ssh_mobile"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true"
+        >
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
