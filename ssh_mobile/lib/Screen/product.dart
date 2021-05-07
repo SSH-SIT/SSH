@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ssh_mobile/widgets/Itemcard.dart';
-import 'package:ssh_mobile/constant.dart';
-import 'package:ssh_mobile/widgets/appbar.dart';
-import 'package:ssh_mobile/widgets/bottomNavigationBar.dart';
-
+import '../widgets/Itemcard.dart';
 import '../constant.dart';
+import '../widgets/appbar.dart';
+import '../widgets/bottomNavigationBar.dart';
+
 import '../widgets/categories_slider.dart';
-import 'package:ssh_mobile/models/product.dart';
+import '../models/product.dart';
+
+import 'package:provider/provider.dart';
+import '../providers/products.dart';
 
 class ProductPage extends StatefulWidget {
   static const routeName = '/products';
@@ -24,6 +26,14 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   int productIndex = 0;
+
+  @override
+  void initState() {
+    Provider.of<Products>(context, listen: false).fetchProducts().then((_) {
+      print(Provider.of<Products>(context, listen: false).products);
+    });
+    super.initState();
+  }
 
   void onCatChange(int index) {
     setState(() {
@@ -45,6 +55,8 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
+    final products = Provider.of<Products>(context).products;
+
     return Scaffold(
       appBar: SSHAppBar(),
       body: Column(
@@ -80,7 +92,7 @@ class _ProductPageState extends State<ProductPage> {
                   childAspectRatio: 0.75,
                 ),
                 itemBuilder: (context, index) => Itemcard(
-                  product: getProduct(productIndex)[index],
+                  product: products[index],
                 ),
               ),
             ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ssh_mobile/screen/cart.dart';
-import 'package:ssh_mobile/screen/product.dart';
-import 'package:ssh_mobile/screen/profile.dart';
-import 'package:ssh_mobile/screen/search.dart';
-import 'package:ssh_mobile/transitions/fade_transition.dart';
+import '../screen/cart.dart';
+import '../screen/product.dart';
+import '../screen/profile.dart';
+import '../screen/search.dart';
+import '../transitions/fade_transition.dart';
 
 class BotNavBar extends StatelessWidget {
   BotNavBar({Key key, this.selectedIndex}) : super(key: key);

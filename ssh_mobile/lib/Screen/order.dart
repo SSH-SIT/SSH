@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ssh_mobile/widgets/appbar.dart';
-import 'package:ssh_mobile/widgets/bottomNavigationBar.dart';
+import '../widgets/appbar.dart';
+import '../widgets/bottomNavigationBar.dart';
 
 class Order extends StatelessWidget {
   static const routeName = '/order';

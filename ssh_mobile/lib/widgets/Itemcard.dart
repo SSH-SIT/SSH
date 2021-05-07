@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ssh_mobile/models/product.dart';
-import 'package:ssh_mobile/screen/product_details.dart';
+import 'package:provider/provider.dart';
+import '../screen/product_details.dart';
+
+import '../providers/products.dart';
+import '../providers/product.dart';
 
 import '../constant.dart';
 
@@ -20,13 +23,13 @@ class Itemcard extends StatelessWidget {
               onTap: () {
                 Navigator.of(context)
                     .pushNamed(ProductDetails.routeName, arguments: {
-                  'id': product.id,
+                  'pid': product.pid,
                 });
               },
               child: Container(
                 padding: EdgeInsets.all(kDefaultPaddin),
                 decoration: BoxDecoration(
-                  color: product.color,
+                  color: Color(0xFF + int.parse(product.color)),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Image.asset(product.image),
@@ -35,7 +38,7 @@ class Itemcard extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: kDefaultPaddin / 4),
           child: Text(
-            product.name,
+            product.pname,
             style: TextStyle(color: kTextLightColor),
           ),
         ),

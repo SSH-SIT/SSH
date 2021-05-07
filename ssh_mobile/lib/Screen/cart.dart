@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:ssh_mobile/widgets/appbar.dart';
-import 'package:ssh_mobile/widgets/bottomNavigationBar.dart';
+import '../widgets/appbar.dart';
+import '../widgets/bottomNavigationBar.dart';
 
 import '../providers/cart.dart';
 
-import 'package:ssh_mobile/widgets/cart_item.dart';
+import '../widgets/cart_item.dart';
 
 class Cart extends StatelessWidget {
   static const routeName = '/cart';

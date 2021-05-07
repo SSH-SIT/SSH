@@ -49,8 +49,8 @@ const createProduct = async (req, res) => {
   try {
     const productInfo = JSON.parse(req.body.productInfo);
     const product_picture =
-      req.files["product_pictures"] !== undefined
-        ? req.files["product_pictures"]
+      req.files["product_picture"] !== undefined
+        ? req.files["product_picture"]
         : null;
     var productPicBuffer;
 
@@ -94,8 +94,8 @@ const updateProduct = async (req, res) => {
     const { pid } = req.params;
     const productInfo = JSON.parse(req.body.productInfo);
     const product_picture =
-      req.files["product_pictures"] !== undefined
-        ? req.files["product_pictures"]
+      req.files["product_picture"] !== undefined
+        ? req.files["product_picture"]
         : null;
     var productPicBuffer;
 
