@@ -23,7 +23,7 @@ const getOneUsers = async (req, res) => {
     const { id } = req.params;
     const users = await Knex("user")
       .fullOuterJoin("address", {
-        "user.uid"ิ: "address.uid",
+        "user.uid": "address.uid",
       })
       .where({
         uid: id,
