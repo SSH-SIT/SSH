@@ -9,8 +9,15 @@ const getUsers = async (req, res) => {
       .fullOuterJoin("address", {
         "user.uid": "address.uid",
       })
-      .select("*");
-
+      .select(
+        "address.*",
+        "user.uid",
+        "user.firstName",
+        "user.lastName",
+        "user.phone_num",
+        "user.email",
+        "user.picture"
+      );
     return res.status(200).send(users);
   } catch (err) {
     return res.status(400).send({
@@ -29,7 +36,15 @@ const getOneUsers = async (req, res) => {
       .where({
         "user.uid": id,
       })
-      .select("firstName, lastName, phone_num, email, address.*");
+      .select(
+        "user.uid",
+        "user.firstName",
+        "user.lastName",
+        "user.phone_num",
+        "user.email",
+        "user.picture",
+        "address.*"
+      );
     return res.status(200).send(users);
   } catch (err) {
     return res.status(400).send({
