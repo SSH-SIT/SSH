@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const getUsers = async (req, res) => {
   try {
     const users = await Knex("user")
-      .innerJoin("address", {
+      .fullOuterJoin("address", {
         "user.uid": "address.uid",
       })
       .select("*");
@@ -22,8 +22,8 @@ const getOneUsers = async (req, res) => {
   try {
     const { id } = req.params;
     const users = await Knex("user")
-      .innerJoin("address", {
-        "user.uid": "address.uid",
+      .fullOuterJoin("address", {
+        "user.uid"ิ: "address.uid",
       })
       .where({
         uid: id,
@@ -57,7 +57,7 @@ const Login = async (req, res) => {
     });
 
     const result = {
-      email: user[0].email,
+      uid: user[0].uid,
       token,
     };
 
@@ -90,7 +90,7 @@ const SignUp = async (req, res) => {
     const {
       firstName,
       lastName,
-      phone_num,
+      phoneNum,
       email,
       picture,
       password,
@@ -102,7 +102,7 @@ const SignUp = async (req, res) => {
       .insert({
         firstName,
         lastName,
-        phone_num,
+        phone_num: phoneNum,
         email,
         picture,
         password: await bcrypt.hash(password, 8),
@@ -114,9 +114,11 @@ const SignUp = async (req, res) => {
     });
 
     const result = {
-      email,
+      uid: registeredInfo[0].uid,
       token,
     };
+
+    return res.status(201).send(result);
   } catch (err) {
     return res.status(400).send({ msg: err.message });
   }
@@ -127,5 +129,5 @@ module.exports = {
   getOneUsers,
   Login,
   LogOut,
-  SignUp
+  SignUp,
 };
