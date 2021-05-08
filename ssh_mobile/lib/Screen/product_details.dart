@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ssh_mobile/providers/products.dart';
@@ -30,16 +33,17 @@ class ProductDetails extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
                       Align(
-                          alignment: Alignment.center,
-                          child: Container(
+                        alignment: Alignment.center,
+                        child: Container(
                             padding: EdgeInsets.all(30),
                             height: 240,
                             width: 250,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                color: Color(0xFFB388CA)),
-                            child: Image.asset(product.image),
-                          )),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Image.memory(
+                                Uint8List.fromList(product.picture.toList()))),
+                      ),
                       Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(

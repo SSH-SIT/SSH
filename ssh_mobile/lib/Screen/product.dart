@@ -7,10 +7,10 @@ import '../widgets/appbar.dart';
 import '../widgets/bottomNavigationBar.dart';
 
 import '../widgets/categories_slider.dart';
-import '../models/product.dart';
 
 import 'package:provider/provider.dart';
 import '../providers/products.dart';
+import '../providers/product.dart';
 
 class ProductPage extends StatefulWidget {
   static const routeName = '/products';
@@ -29,9 +29,7 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   void initState() {
-    Provider.of<Products>(context, listen: false).fetchProducts().then((_) {
-      print(Provider.of<Products>(context, listen: false).products);
-    });
+    Provider.of<Products>(context, listen: false).fetchProducts();
     super.initState();
   }
 
@@ -41,21 +39,14 @@ class _ProductPageState extends State<ProductPage> {
     });
   }
 
-  List<Product> getProduct(int productIndex) {
-    if (productIndex == 0)
-      return products;
-    else if (productIndex == 1)
-      return critoral;
-    else if (productIndex == 2)
-      return clit;
-    else if (productIndex == 3) return dildos;
-
-    return [];
-  }
-
   @override
   Widget build(BuildContext context) {
     final products = Provider.of<Products>(context).products;
+    List<Product> belongToPage = [];
+
+    products.forEach((product) {
+      if (productIndex + 1 == product.typeID) belongToPage.add(element);
+    });
 
     return Scaffold(
       appBar: SSHAppBar(),
@@ -84,7 +75,7 @@ class _ProductPageState extends State<ProductPage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
               child: GridView.builder(
-                itemCount: products.length,
+                itemCount: belongToPage.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: kDefaultPaddin,
@@ -92,7 +83,7 @@ class _ProductPageState extends State<ProductPage> {
                   childAspectRatio: 0.75,
                 ),
                 itemBuilder: (context, index) => Itemcard(
-                  product: products[index],
+                  product: belongToPage.elementAt(index),
                 ),
               ),
             ),

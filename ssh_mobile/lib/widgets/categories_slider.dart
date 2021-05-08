@@ -24,7 +24,9 @@ class _CategoriesSliderState extends State<CategoriesSlider> {
     "Prostate Toys",
     "Anal Beads",
     "Cock Rings",
-    "Glass and Metal Wands"
+    "Glass and Metal Wands",
+    "Condom",
+    "Lubricating Gel"
   ];
 
   int selectedIndex = 0;

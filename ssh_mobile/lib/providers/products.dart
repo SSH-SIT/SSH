@@ -21,7 +21,6 @@ class Products extends ChangeNotifier {
 
     try {
       final res = await http.get(Uri.parse(endpoint));
-      // print(res.body);
       final data = jsonDecode(res.body);
 
       if (data == null) return;
@@ -29,15 +28,15 @@ class Products extends ChangeNotifier {
       final List<Product> fetchedProducts = [];
       data.forEach((value) {
         fetchedProducts.add(Product(
-          // pid: value['pid'],
-          pname: value['pname'],
-          description: value['description'],
-          price: value['price'],
-          // type: value.type_name,
-          // typeID: value.type_id
-        ));
+            pid: value['pid'],
+            pname: value['pname'],
+            description: value['description'],
+            price: value['price'].toDouble(),
+            type: value['type_name'],
+            typeID: value['type_id'],
+            picture: value['picture']['data'].cast<int>(),
+            color: value['color']));
       });
-      print(fetchedProducts);
       _products = fetchedProducts;
       notifyListeners();
     } catch (err) {

@@ -1,7 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:provider/provider.dart';
+import 'package:ssh_mobile/providers/product.dart';
+import 'package:ssh_mobile/providers/products.dart';
 import '../providers/cart.dart';
 
 class CartItem extends StatelessWidget {
@@ -12,8 +16,10 @@ class CartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartProvider>(context);
+    Product item = Provider.of<Products>(context).findById(product.id);
 
     return Container(
+      margin: EdgeInsets.symmetric(vertical: 15),
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
           color: Color(0xFFFFF7EC),
@@ -33,10 +39,10 @@ class CartItem extends StatelessWidget {
                   alignment: Alignment.topCenter,
                   child: Container(
                     alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: Colors.purple[200],
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Image.asset('assets/images/Clitoral.png'),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(30)),
+                    child:
+                        Image.memory(Uint8List.fromList(item.picture.toList())),
                   ))),
           Expanded(
               flex: 7,
@@ -46,7 +52,7 @@ class CartItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text("Product's Name",
+                    Text(item.pname,
                         style: GoogleFonts.montserrat().copyWith(
                             fontWeight: FontWeight.bold, fontSize: 20)),
                     SizedBox(height: 10),
