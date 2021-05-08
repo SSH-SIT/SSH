@@ -1,4 +1,7 @@
 import 'package:flutter/foundation.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CartProduct {
   final int id;
@@ -11,6 +14,7 @@ class CartProduct {
 
 class CartProvider with ChangeNotifier {
   Map<int, CartProduct> _items = {};
+  var publicAPI = 'http://localhost:5000/';
 
   Map<int, CartProduct> get items {
     return {..._items};
@@ -66,5 +70,38 @@ class CartProvider with ChangeNotifier {
   void clearCart() {
     _items = {};
     notifyListeners();
+  }
+
+  Future<bool> buyItem() async {
+    var endpoint = publicAPI + '/users/buy';
+    final prefs = await SharedPreferences.getInstance();
+    final user = json.decode(prefs.getString('user'));
+    final uid = user['uid'];
+
+    try {
+      List _products = [];
+      _items.forEach((key, value) {
+        _products
+            .add({"pid": value.id, "amount": value.price * value.quantity});
+      });
+
+      Map<String, dynamic> args = {
+        "products": _products,
+        "uid": uid.toString()
+      };
+
+      final res = await http.post(Uri.parse(endpoint),
+          body: json.encode(args),
+          headers: {'Content-type': 'application/json'});
+
+      if (res.statusCode == 201) {
+        _items = {};
+      } else if (res.statusCode == 400) return false;
+
+      notifyListeners();
+      return true;
+    } catch (err) {
+      return throw (err);
+    }
   }
 }

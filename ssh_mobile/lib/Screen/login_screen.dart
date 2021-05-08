@@ -1,9 +1,10 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:provider/provider.dart';
+import 'package:ssh_mobile/screen/product.dart';
+import './signup_screen.dart';
 import '../providers/auth.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,8 +17,16 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  String statusText = '';
+
+  void setStatus(int status) {
+    setState(() {
+      statusText =
+          status == 1 ? 'Log In Success.' : 'Email or Password is incorrect.';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +40,11 @@ class _LoginPageState extends State<LoginPage> {
           fillColor: Color(0xffF6D796),
           filled: true,
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Username",
+          hintText: "Email",
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(25.0),
               borderSide: BorderSide(color: Color(0xffFEC10E)))),
-      controller: _usernameController,
+      controller: _emailController,
     );
     final passwordField = TextField(
       obscureText: true,
@@ -50,24 +59,54 @@ class _LoginPageState extends State<LoginPage> {
               OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
       controller: _passwordController,
     );
-    final loginButon = Material(
-      elevation: 5.0,
-      borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xffF6D796),
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: () {
-          auth.login();
-        },
-        child: Text("Login",
-            textAlign: TextAlign.center,
-            style: GoogleFonts.montserrat().copyWith(
-                color: Colors.black87,
-                fontWeight: FontWeight.bold,
-                fontSize: 20)),
-      ),
-    );
+
+    final loginButton = ConstrainedBox(
+        constraints: BoxConstraints.tightFor(
+            width: MediaQuery.of(context).size.width * 0.3),
+        child: ElevatedButton(
+          onPressed: () {
+            auth
+                .login(_emailController.text.toString(),
+                    _passwordController.text.toString())
+                .then((status) {
+              if (status == true) {
+                Navigator.pushReplacementNamed(context, ProductPage.routeName);
+                setStatus(1);
+              } else
+                setStatus(0);
+            });
+          },
+          style: ElevatedButton.styleFrom(
+              elevation: 8,
+              primary: Color(0xffF6D796),
+              padding: EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32))),
+          child: Text('Login',
+              style: GoogleFonts.montserrat().copyWith(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20)),
+        ));
+    final signupButton = ConstrainedBox(
+        constraints: BoxConstraints.tightFor(
+            width: MediaQuery.of(context).size.width * 0.3),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, SignUp.routeName);
+          },
+          style: ElevatedButton.styleFrom(
+              elevation: 8,
+              primary: Color(0xffF6D796),
+              padding: EdgeInsets.all(12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32))),
+          child: Text('Sign Up',
+              style: GoogleFonts.montserrat().copyWith(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20)),
+        ));
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -78,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                     image: AssetImage('assets/images/LoginWallpaper.jpg'))),
             child: SingleChildScrollView(
                 child: Padding(
-                    padding: const EdgeInsets.all(36.0),
+                    padding: const EdgeInsets.all(36),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -94,22 +133,18 @@ class _LoginPageState extends State<LoginPage> {
                         userNameField,
                         SizedBox(height: 25.0),
                         passwordField,
-                        SizedBox(height: 25.0),
-                        RichText(
-                            text: TextSpan(
-                                text: 'forgot password?',
-                                style: GoogleFonts.montserrat().copyWith(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    decoration: TextDecoration.underline),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    print('Forget Password Ka');
-                                  })),
-                        SizedBox(
-                          height: 35.0,
+                        SizedBox(height: 15),
+                        Text(
+                          statusText,
+                          style: GoogleFonts.montserrat(
+                              fontSize: 15, color: Colors.red),
                         ),
-                        loginButon,
+                        SizedBox(height: 25.0),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [loginButton, signupButton],
+                        ),
                         SizedBox(
                           height: 15.0,
                         ),

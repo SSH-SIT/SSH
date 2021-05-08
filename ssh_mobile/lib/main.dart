@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ssh_mobile/providers/products.dart';
+import 'package:ssh_mobile/screen/signup_screen.dart';
+import 'package:ssh_mobile/screen/splash_screen.dart';
 
 import './screen/cart.dart';
 import './screen/product.dart';
@@ -59,9 +61,18 @@ class _SSHstate extends State<SSH> {
                   Theme.of(context).textTheme.apply(bodyColor: kTextColor),
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            home: auth.isAuth ? ProductPage() : LoginPage(),
+            home: auth.isAuth
+                ? ProductPage()
+                : FutureBuilder(
+                    future: auth.autoLogin(),
+                    builder: (context, authSnapShot) =>
+                        authSnapShot.connectionState == ConnectionState.waiting
+                            ? SplashScreen()
+                            : LoginPage(),
+                  ),
             routes: {
               LoginPage.routeName: (context) => LoginPage(),
+              SignUp.routeName: (context) => SignUp(),
               ProductPage.routeName: (context) => ProductPage(),
               ProductDetails.routeName: (context) => ProductDetails(),
               Cart.routeName: (context) => Cart(),

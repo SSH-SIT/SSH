@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -32,17 +31,13 @@ class ProductDetails extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: <Widget>[
-                      Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                            padding: EdgeInsets.all(30),
-                            height: 240,
-                            width: 250,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            child: Image.memory(
-                                Uint8List.fromList(product.picture.toList()))),
+                      Container(
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Image.memory(
+                            Uint8List.fromList(product.picture.toList())),
                       ),
                       Align(
                           alignment: Alignment.centerLeft,
