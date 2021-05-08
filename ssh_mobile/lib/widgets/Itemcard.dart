@@ -1,11 +1,8 @@
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
 import '../screen/product_details.dart';
 
-// import '../providers/products.dart';
 import '../providers/product.dart';
 
 import '../constant.dart';

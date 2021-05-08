@@ -140,9 +140,27 @@ const SignUp = async (req, res) => {
 
 const BuyProduct = async (req, res) => {
   try {
-    const products = req.body;
+    const { products, uid } = req.body;
 
-    res.status(200).send(products);
+    const buyTime = new Date();
+
+    const orders = await Knex("order")
+      .insert({
+        uid,
+        date: buyTime,
+      })
+      .returning("*");
+
+    products.map(async (val) => {
+      await Knex("order_details").insert({
+        order_id: orders[0].order_id,
+        pid: val.pid,
+        amount: parseFloat(val.amount),
+        date: buyTime,
+      });
+    });
+
+    return res.status(201).send({ msg: "Buying Complete." });
   } catch (err) {
     return res.status(400).send({ msg: err.message });
   }

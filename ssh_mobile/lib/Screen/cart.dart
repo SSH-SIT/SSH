@@ -8,9 +8,16 @@ import '../providers/cart.dart';
 
 import '../widgets/cart_item.dart';
 
-class Cart extends StatelessWidget {
+class Cart extends StatefulWidget {
+  Cart({Key key}) : super(key: key);
+
   static const routeName = '/cart';
 
+  @override
+  _CartState createState() => _CartState();
+}
+
+class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartProvider>(context);
@@ -65,7 +72,7 @@ class Cart extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)),
                       onPressed: () {
-                        print('Hi There!');
+                        cart.buyItem();
                       },
                       label: Text(
                         'Buy Now',

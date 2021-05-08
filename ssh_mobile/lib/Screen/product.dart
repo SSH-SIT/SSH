@@ -43,10 +43,16 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     final products = Provider.of<Products>(context).products;
     List<Product> belongToPage = [];
+    bool isInit = false;
 
     products.forEach((product) {
-      if (productIndex + 1 == product.typeID) belongToPage.add(element);
+      if (productIndex + 1 == product.typeID) belongToPage.add(product);
     });
+
+    if (products.length != 0)
+      setState(() {
+        isInit = true;
+      });
 
     return Scaffold(
       appBar: SSHAppBar(),
@@ -71,23 +77,39 @@ class _ProductPageState extends State<ProductPage> {
             productIndex: productIndex,
             onPageChange: onCatChange,
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
-              child: GridView.builder(
-                itemCount: belongToPage.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: kDefaultPaddin,
-                  crossAxisSpacing: kDefaultPaddin,
-                  childAspectRatio: 0.75,
+          isInit
+              ? Expanded(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: kDefaultPaddin),
+                    child: GridView.builder(
+                      itemCount: belongToPage.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: kDefaultPaddin,
+                        crossAxisSpacing: kDefaultPaddin,
+                        childAspectRatio: 0.75,
+                      ),
+                      itemBuilder: (context, index) => Itemcard(
+                        product: belongToPage.elementAt(index),
+                      ),
+                    ),
+                  ),
+                )
+              : Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.5,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Align(
+                            alignment: Alignment.center,
+                            child: Text('Loading Products',
+                                style: GoogleFonts.montserrat().copyWith(
+                                    fontSize: 25, fontWeight: FontWeight.bold)))
+                      ]),
                 ),
-                itemBuilder: (context, index) => Itemcard(
-                  product: belongToPage.elementAt(index),
-                ),
-              ),
-            ),
-          ),
         ],
       ),
       bottomNavigationBar: BotNavBar(selectedIndex: 0),

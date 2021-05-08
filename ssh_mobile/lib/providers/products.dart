@@ -43,4 +43,33 @@ class Products extends ChangeNotifier {
       return throw (err);
     }
   }
+
+  Future<List<Product>> searchProducts(String evidence) async {
+    var endpoint = publicAPI + 'product/search';
+
+    try {
+      final res =
+          await http.post(Uri.parse(endpoint), body: {"evidence": evidence});
+      final data = jsonDecode(res.body);
+
+      if (data == null) return [];
+
+      final List<Product> searchedProducts = [];
+      data.forEach((value) {
+        searchedProducts.add(Product(
+            pid: value['pid'],
+            pname: value['pname'],
+            description: value['description'],
+            price: value['price'].toDouble(),
+            type: value['type_name'],
+            typeID: value['type_id'],
+            picture: value['picture']['data'].cast<int>(),
+            color: value['color']));
+      });
+
+      return searchedProducts;
+    } catch (err) {
+      return throw (err);
+    }
+  }
 }
