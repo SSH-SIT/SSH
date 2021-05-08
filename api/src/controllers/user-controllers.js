@@ -42,7 +42,7 @@ const Login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await knex("user").where({ email }).select();
+    const user = await Knex("user").where({ email }).select();
     const isPasswordMatch = await bcrypt.compare(password, user[0].password);
 
     if (user.length === 0 || !isPasswordMatch)
@@ -52,7 +52,7 @@ const Login = async (req, res) => {
 
     const token = JWT.sign({ email, date: new Date() }, process.env.SECRET_KEY);
 
-    await knex("user_token").insert({
+    await Knex("user_token").insert({
       uid: user[0].uid,
       token,
     });
@@ -73,12 +73,12 @@ const LogOut = async (req, res) => {
     const token = req.headers.authorization.replace("Bearer ", "");
 
     const decoded = JWT.verify(token, process.env.SECRET_KEY);
-    const user = await knex("user").where({ email: decoded.email }).select();
+    const user = await Knex("user").where({ email: decoded.email }).select();
 
     if (user.length === 0)
       return res.status(401).send({ msg: "Invalid Token." });
 
-    await knex("user_token").where({ token }).delete();
+    await Knex("user_token").where({ token }).delete();
 
     return res.status(200).send({ msg: "Log Out Success" });
   } catch (err) {
