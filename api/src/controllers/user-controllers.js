@@ -29,7 +29,7 @@ const getOneUsers = async (req, res) => {
       .where({
         "user.uid": id,
       })
-      .select("*");
+      .select("user.firstName, user.lastName, user.phone_num, user.email, address.*");
     return res.status(200).send(users);
   } catch (err) {
     return res.status(400).send({
