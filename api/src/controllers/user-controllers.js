@@ -138,10 +138,21 @@ const SignUp = async (req, res) => {
   }
 };
 
+const BuyProduct = async (req, res) => {
+  try {
+    const products = req.body;
+
+    res.status(200).send(products);
+  } catch (err) {
+    return res.status(400).send({ msg: err.message });
+  }
+};
+
 module.exports = {
   getUsers,
   getOneUsers,
   Login,
   LogOut,
   SignUp,
+  BuyProduct,
 };
