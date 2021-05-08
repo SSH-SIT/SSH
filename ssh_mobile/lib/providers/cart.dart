@@ -14,7 +14,7 @@ class CartProduct {
 
 class CartProvider with ChangeNotifier {
   Map<int, CartProduct> _items = {};
-  var publicAPI = 'http://localhost:5000/';
+  var publicAPI = 'http://34.101.230.129/api/';
 
   Map<int, CartProduct> get items {
     return {..._items};
