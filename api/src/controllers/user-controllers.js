@@ -1,5 +1,6 @@
 const Knex = require("../database/");
 const bcrypt = require("bcrypt");
+const JWT = require("jsonwebtoken");
 
 // GET Method
 const getUsers = async (req, res) => {
