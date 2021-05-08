@@ -27,7 +27,7 @@ const getOneUsers = async (req, res) => {
         "user.uid": "address.uid",
       })
       .where({
-        uid: id,
+        "user.uid": id,
       })
       .select("*");
     return res.status(200).send(users);
@@ -46,9 +46,7 @@ const Login = async (req, res) => {
     const isPasswordMatch = await bcrypt.compare(password, user[0].password);
 
     if (user.length === 0 || !isPasswordMatch)
-      return res
-        .status(400)
-        .send({ msg: "Username or Password is incorrect." });
+      return res.status(400).send({ msg: "Email or Password is incorrect." });
 
     const token = JWT.sign({ email, date: new Date() }, process.env.SECRET_KEY);
 
