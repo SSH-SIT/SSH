@@ -8,14 +8,19 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useLoaded } from "../../utils/Loader";
 import API from "../../api/path";
+import DashboardCard from "../../components/DashboardCard";
 
 export default function DashBoard({}) {
   const loaded = useLoaded();
   const router = useRouter();
   const [saleOverviewDataSets, setSaleOverviewDataSets] = useState([]);
+  const [topSellersProducts, setTopSellersProducts] = useState([]);
+  const [amountOfProducts, setAmountOfProducts] = useState([]);
 
   useEffect(() => {
-    showSaleOverview()
+    showSaleOverview();
+    showTopSellerProduct();
+    showAmountOfProducts();
   }, [loaded]);
 
   async function showSaleOverview() {
@@ -32,11 +37,14 @@ export default function DashBoard({}) {
   async function showTopSellerProduct() {
     const res = await API.util.topSellers();
     if (res.status === 200) {
-      var tempArr = [];
-      for (let i = 0; i < 12; i++) {
-        tempArr.push(res.data[i]);
-      }
-      setSaleOverviewDataSets(tempArr);
+      setTopSellersProducts(res.data);
+    }
+  }
+
+  async function showAmountOfProducts() {
+    const res = await API.util.amountOfProducts();
+    if (res.status === 200) {
+      setAmountOfProducts(res.data);
     }
   }
 
@@ -106,12 +114,26 @@ export default function DashBoard({}) {
                   style={{
                     marginTop: "40px",
                     width: "100%",
-                    height: "450px",
+                    height: "600px",
                     backgroundColor: "#F6D796",
                     borderRadius: "20px",
                     boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
+                    display: "flex",
+                    flexDirection: "column",
                   }}
-                ></div>
+                >
+                  {topSellersProducts.map((top) => {
+                    return (
+                      <DashboardCard
+                        key={top.pid}
+                        type="top-seller"
+                        title={top.pname}
+                        value={top.total_amount}
+                        picture={top.picture}
+                      />
+                    );
+                  })}
+                </div>
               </Grid>
               <Grid item style={{ width: "50%" }}>
                 <Typography variant="h4">Amount of Product</Typography>
@@ -119,12 +141,25 @@ export default function DashBoard({}) {
                   style={{
                     marginTop: "40px",
                     width: "100%",
-                    height: "450px",
+                    height: "600px",
                     backgroundColor: "#F6D796",
                     borderRadius: "20px",
                     boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)",
+                    display: "flex",
+                    flexDirection: "column",
                   }}
-                ></div>
+                >
+                  {amountOfProducts.map((prod) => {
+                    return (
+                      <DashboardCard
+                        key={prod.pid}
+                        type="amount-of-prod"
+                        title={prod.type_name}
+                        value={prod.amount}
+                      />
+                    );
+                  })}
+                </div>
               </Grid>
             </Grid>
           </Grid>
