@@ -32,12 +32,55 @@ const getSaleOverview = async (req, res) => {
 
 const topSellerProduct = async (req, res) => {
   try {
-    const datas = await knex("order")
-      .select(knex.raw(`order_id, uid, date_part('month', date) as month`))
-      .groupByRaw("month")
-      .groupBy("order_id");
+    const products_id = await knex("order_details")
+      .groupBy("pid")
+      .orderBy(knex.sum({ total_amount: "amount" }), "desc")
+      .limit(3)
+      .select(knex.raw("pid, sum(amount) as total_amount"));
 
-    return res.status(200).send(datas);
+    var products_id_arr = [];
+    var products_amount = [];
+    products_id.map((id) => {
+      products_id_arr.push(id.pid);
+      products_amount.push(id.total_amount);
+    });
+
+    var products = await knex("product")
+      .whereIn("product.pid", products_id_arr)
+      .fullOuterJoin("product_picture", {
+        "product.pid": "product_picture.pid",
+      })
+      .select("product.*", "product_picture.picture");
+
+    products_amount.map((amount, index) => {
+      products[index]["total_amount"] = amount;
+    });
+
+    return res.status(200).send(products);
+  } catch (err) {
+    return res.status(400).send({ msg: err.message });
+  }
+};
+
+const amountOfProducts_alongwithCategories = async (req, res) => {
+  try {
+    const amount = await knex("product")
+      .groupBy("type_id")
+      .orderBy(knex.count("type_id"), "desc")
+      .limit(3)
+      .select(knex.raw("type_id, count(type_id) as amount"));
+
+    const type_id = amount.map((val) => val.type_id);
+
+    const amount_typeName = await knex("product_type")
+      .whereIn("type_id", type_id)
+      .select("type_name");
+
+    amount_typeName.map(
+      (val, index) => (amount[index]["type_name"] = val.type_name)
+    );
+
+    return res.status(200).send(amount);
   } catch (err) {
     return res.status(400).send({ msg: err.message });
   }
@@ -46,4 +89,5 @@ const topSellerProduct = async (req, res) => {
 module.exports = {
   getSaleOverview,
   topSellerProduct,
+  amountOfProducts_alongwithCategories,
 };

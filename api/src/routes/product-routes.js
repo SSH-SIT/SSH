@@ -19,11 +19,11 @@ const {
   searchProduct,
 } = require("../controllers/product-controllers");
 
-Router.get("/product", getProduct);
-Router.get("/product/:pid", getOneProduct);
+Router.get("/", getProduct);
+Router.get("/:pid", getOneProduct);
 Router.post("/product", upload.single("product_picture"), createProduct);
-Router.patch("/product/:pid", upload.single("product_picture"), updateProduct);
-Router.delete("/product/:pid", deleteProduct);
-Router.post("/product/search", searchProduct);
+Router.patch("/:pid", upload.single("product_picture"), updateProduct);
+Router.delete("/:pid", deleteProduct);
+Router.post("/search", searchProduct);
 
 module.exports = Router;
