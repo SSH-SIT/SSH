@@ -5,13 +5,16 @@ const UserRoutes = require("./user-routes");
 const AdminRoutes = require("./admin-routes");
 const ProductRoutes = require("./product-routes");
 const UtilRoutes = require("./util-routes");
-
-Router.use('/users', UserRoutes);
-
-Router.use(ProductRoutes);
-
-Router.use(UtilRoutes);
+const OrderRoutes = require("./order-routes");
 
 Router.use("/admin", AdminRoutes);
+
+Router.use("/users", UserRoutes);
+
+Router.use("/product", ProductRoutes);
+
+Router.use("/orders", OrderRoutes);
+
+Router.use(UtilRoutes);
 
 module.exports = Router;
