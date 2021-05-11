@@ -24,7 +24,7 @@ export default function Orders({}) {
         return (
           <Grid
             onClick={() => {
-              router.push(`/orders/${params.row.id}`);
+              router.push(`/orders/${orderData[params.row.id].order_id}`);
             }}
           >
             {params.value}
@@ -41,7 +41,7 @@ export default function Orders({}) {
           <Grid
             style={{ textAlign: "center" }}
             onClick={() => {
-              router.push(`/orders/${params.row.id}`);
+              router.push(`/orders/${orderData[params.row.id].order_id}`);
             }}
           >
             {params.value}
@@ -64,7 +64,7 @@ export default function Orders({}) {
           <Grid
             className="text-center w-full"
             onClick={() => {
-              router.push(`/orders/${params.row.id}`);
+              router.push(`/orders/${orderData[params.row.id].order_id}`);
             }}
           >
             {telStr}
@@ -81,7 +81,9 @@ export default function Orders({}) {
           <Grid>
             <Typography
               style={{ color: "blue" }}
-              onClick={() => router.push(`/orders/${params.row.id}`)}
+              onClick={() =>
+                router.push(`/orders/${orderData[params.row.id].order_id}`)
+              }
             >
               See More
             </Typography>
@@ -106,6 +108,7 @@ export default function Orders({}) {
       });
       setOrder(tempArr);
       setOrderData(tempArr);
+      setOrderAmount(tempArr.length);
     }
   }
 
