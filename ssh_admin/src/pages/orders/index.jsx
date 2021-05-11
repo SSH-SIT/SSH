@@ -3,24 +3,26 @@ import { SearchOutlined } from "@material-ui/icons";
 import NavBar from "../../components/NavBar";
 import { DataGrid } from "@material-ui/data-grid";
 
+import API from "../../api/path";
+import { useRouter } from "next/router";
 import { useLoaded } from "../../utils/Loader";
 import { useEffect, useState } from "react";
 
 export default function Orders({}) {
+  const [order, setOrder] = useState([]);
+  const [orderData, setOrderData] = useState([]);
   const [orderAmount, setOrderAmount] = useState(0);
   const loaded = useLoaded();
+  const router = useRouter();
 
   const columns = [
     {
-      field: "id",
+      field: "order_id",
       headerName: "Order ID",
       flex: 0.8,
-      headerAlign: "center",
-      align: "center",
       renderCell: (params) => {
         return (
           <Grid
-            className="text-center w-full"
             onClick={() => {
               router.push(`/orders/${params.row.id}`);
             }}
@@ -31,32 +33,26 @@ export default function Orders({}) {
       },
     },
     {
-      field: "name",
+      field: "pname",
       headerName: "Product Name",
       flex: 1.2,
-      headerAlign: "center",
-      align: "center",
       renderCell: (params) => {
         return (
-          <Tooltip placement="bottom" title={params.value}>
-            <Grid
-              className="text-center w-full"
-              onClick={() => {
-                router.push(`/patient-history/${params.row.id}`);
-              }}
-            >
-              {params.value}
-            </Grid>
-          </Tooltip>
+          <Grid
+            style={{ textAlign: "center" }}
+            onClick={() => {
+              router.push(`/orders/${params.row.id}`);
+            }}
+          >
+            {params.value}
+          </Grid>
         );
       },
     },
     {
-      field: "phone_number",
+      field: "phone_num",
       headerName: "Phone Number",
       flex: 1.2,
-      headerAlign: "center",
-      align: "center",
       renderCell: (params) => {
         const telStr =
           params.value.substring(0, 3) +
@@ -68,7 +64,7 @@ export default function Orders({}) {
           <Grid
             className="text-center w-full"
             onClick={() => {
-              router.push(`/patient-history/${params.row.id}`);
+              router.push(`/orders/${params.row.id}`);
             }}
           >
             {telStr}
@@ -78,24 +74,70 @@ export default function Orders({}) {
     },
     {
       field: "actions",
+      headerName: "Action",
       flex: 0.8,
-      headerAlign: "center",
-      align: "center",
       renderCell: (params) => {
         return (
-          <Grid container direction="row" justify="center">
-            <Grid item>
-              <Typography
-                onClick={() => router.push(`/orders/${params.row.id}`)}
-              >
-                See More
-              </Typography>
-            </Grid>
+          <Grid>
+            <Typography
+              style={{ color: "blue" }}
+              onClick={() => router.push(`/orders/${params.row.id}`)}
+            >
+              See More
+            </Typography>
           </Grid>
         );
       },
     },
   ];
+
+  async function getAllOrders() {
+    const res = await API.orders.getAllOrders();
+    if (res.status === 200) {
+      var tempArr = [];
+      res.data.map((data, index) => {
+        const temp = {
+          id: index,
+          order_id: data.order_id,
+          pname: data.pname,
+          phone_num: data.phone_num,
+        };
+        tempArr.push(temp);
+      });
+      setOrder(tempArr);
+      setOrderData(tempArr);
+    }
+  }
+
+  function onSearch(e) {
+    const { value } = e.target;
+
+    const searchedName = orderData.filter((data) =>
+      data.pname.toLowerCase().includes(value.toLowerCase())
+    );
+    const searchedPhoneNum = orderData.filter((data) =>
+      data.phone_num.includes(value)
+    );
+
+    const mergedSearched = [...searchedName, ...searchedPhoneNum];
+    const searchedResults = [];
+    mergedSearched.forEach((data, index) => {
+      const find = searchedResults.find((item) => item.id === data.id);
+      if (!find)
+        searchedResults.push({
+          id: index,
+          order_id: data.order_id,
+          pname: data.pname,
+          phone_num: data.phone_num,
+        });
+    });
+
+    setOrder(searchedResults);
+  }
+
+  useEffect(() => {
+    getAllOrders();
+  }, []);
 
   return (
     loaded && (
@@ -125,7 +167,7 @@ export default function Orders({}) {
                   placeholder="Search"
                   label=""
                   variant="outlined"
-                  onChange={() => {}}
+                  onChange={(e) => onSearch(e)}
                   InputProps={{
                     startAdornment: (
                       <SearchOutlined style={{ color: "rgba(0,0,0,0.54)" }} />
@@ -137,7 +179,7 @@ export default function Orders({}) {
             <Grid style={{ width: "100%", height: "500px", padding: "50px" }}>
               <DataGrid
                 checkboxSelection
-                rows={[]}
+                rows={order}
                 columns={columns}
                 rowsPerPageOptions={[5, 10, 15, 20]}
                 pageSize={10}

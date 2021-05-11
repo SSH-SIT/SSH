@@ -10,8 +10,10 @@ export default function Products({}) {
   const router = useRouter();
 
   return (
-    <>
-      <NavBar></NavBar>
-    </>
+    loaded && (
+      <>
+        <NavBar></NavBar>
+      </>
+    )
   );
 }
