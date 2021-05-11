@@ -6,4 +6,9 @@ export default {
       .then((res) => res)
       .catch((err) => err);
   },
+  getOneOrder: async (order_id) => {
+    return await API.get(`/orders/${order_id}`)
+      .then((res) => res)
+      .catch((err) => err);
+  },
 };
