@@ -1,15 +1,19 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
-import './product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class OrderProduct {
-  final List<Product> products;
-  final double amount;
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
-  OrderProduct({this.amount, this.products});
+import 'package:http/http.dart' as http;
+
+import './product.dart';
+
+class OrderProduct {
+  List<Product> products;
+  double amount;
+  int orderID;
+
+  OrderProduct({this.amount, this.products, this.orderID});
 }
 
 class Orders extends ChangeNotifier {
@@ -18,6 +22,14 @@ class Orders extends ChangeNotifier {
 
   List<OrderProduct> get orders {
     return [..._orders];
+  }
+
+  int get amountOfOrders {
+    return _orders.length;
+  }
+
+  OrderProduct orderProducts(int orderID) {
+    return _orders.firstWhere((element) => element.orderID == orderID);
   }
 
   double totalPrice(int index) {
@@ -36,19 +48,38 @@ class Orders extends ChangeNotifier {
       if (data == null) return;
 
       final List<OrderProduct> fetchedOrders = [];
-      Map<String, int> count = {};
       data.forEach((value) {
-        // var comments = <OrderProduct>[...];
-        // var count = comments.where((c) => c['order_id'] == [order_id]).toList().length;
+        final checkListed = fetchedOrders
+            .where((element) => element.orderID == value['order_id']);
 
-        count['$value'] = count.containsKey('$value') ? count['$value'] + 1 : 1;
+        OrderProduct tempOrder;
+        if (checkListed.isEmpty) {
+          List<Product> _listTemp = [];
+          _listTemp.add(Product(
+              pid: value['pid'],
+              pname: value['pname'],
+              price: value['price'].toDouble(),
+              description: value['description'],
+              typeID: value['type_id'],
+              picture: value['picture']['data'].cast<int>()));
+          tempOrder = OrderProduct(
+              orderID: value['order_id'],
+              amount: value['amount'].toDouble(),
+              products: _listTemp);
+        } else {
+          tempOrder = fetchedOrders
+              .firstWhere((element) => element.orderID == value['order_id']);
+          tempOrder.products.add(Product(
+              pid: value['pid'],
+              pname: value['pname'],
+              price: value['price'].toDouble(),
+              description: value['description'],
+              typeID: value['type_id'],
+              picture: value['picture']['data'].cast<int>()));
+          tempOrder.amount += value['amount'].toDouble();
+        }
 
-        print(count);
-
-        fetchedOrders.add(OrderProduct(
-          products: value['products'],
-          amount: value['amount'].toDouble(),
-        ));
+        fetchedOrders.add(tempOrder);
       });
       _orders = fetchedOrders;
       notifyListeners();

@@ -106,10 +106,10 @@ class _ProfileState extends State<Profile> {
                       )),
                   ElevatedButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                             context, FadeRoute(page: Order()));
                       },
-                      child: Text('see order'))
+                      child: Text('See Orders'))
                 ],
               ))
           : Container(

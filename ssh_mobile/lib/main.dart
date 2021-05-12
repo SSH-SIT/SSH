@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ssh_mobile/providers/products.dart';
-import 'package:ssh_mobile/screen/signup_screen.dart';
-import 'package:ssh_mobile/screen/splash_screen.dart';
 
 import './screen/cart.dart';
 import './screen/product.dart';
@@ -9,6 +7,9 @@ import './screen/product_details.dart';
 import './screen/profile.dart';
 import './screen/order.dart';
 import './screen/search.dart';
+import './screen/order_details.dart';
+import './screen/signup_screen.dart';
+import './screen/splash_screen.dart';
 
 import './screen/login_Screen.dart';
 
@@ -80,6 +81,7 @@ class _SSHstate extends State<SSH> {
               Cart.routeName: (context) => Cart(),
               Profile.routeName: (context) => Profile(),
               Order.routeName: (context) => Order(),
+              OrderDetails.routeName: (context) => OrderDetails(),
               Search.routeName: (context) => Search()
             },
           ),

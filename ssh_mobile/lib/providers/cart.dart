@@ -33,6 +33,8 @@ class CartProvider with ChangeNotifier {
   }
 
   void addItem(int id, double price) {
+    print(id);
+    print(price);
     if (_items.containsKey(id)) {
       _items.update(
           id,

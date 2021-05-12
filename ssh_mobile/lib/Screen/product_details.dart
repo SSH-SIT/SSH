@@ -11,14 +11,15 @@ import '../providers/cart.dart';
 import '../providers/product.dart';
 
 class ProductDetails extends StatelessWidget {
-  ProductDetails({Key key}) : super(key: key);
+  ProductDetails({Key key, this.pid}) : super(key: key);
+
+  final pid;
 
   static const routeName = '/product-details';
 
   @override
   Widget build(BuildContext context) {
-    Map args = ModalRoute.of(context).settings.arguments;
-    Product product = Provider.of<Products>(context).findById(args['pid']);
+    Product product = Provider.of<Products>(context).findById(pid);
 
     final cart = Provider.of<CartProvider>(context);
 

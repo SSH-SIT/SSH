@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:ssh_mobile/transitions/fade_transition.dart';
 import '../screen/product_details.dart';
 
 import '../providers/product.dart';
@@ -21,10 +22,7 @@ class Itemcard extends StatelessWidget {
         Expanded(
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context)
-                  .pushNamed(ProductDetails.routeName, arguments: {
-                'pid': product.pid,
-              });
+              Navigator.push(context, FadeRoute(page: ProductDetails(pid: product.pid,)));
             },
             child: Container(
                 padding: EdgeInsets.all(kDefaultPaddin),

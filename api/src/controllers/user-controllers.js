@@ -108,6 +108,12 @@ const SignUp = async (req, res) => {
       email,
       picture,
       password,
+      address,
+      sub_district,
+      district,
+      province,
+      country,
+      zip_code
     } = req.body;
 
     const token = JWT.sign({ email, date: new Date() }, process.env.SECRET_KEY);
@@ -126,6 +132,16 @@ const SignUp = async (req, res) => {
       uid: registeredInfo[0].uid,
       token,
     });
+
+    await Knex('address').insert({
+      uid: registeredInfo[0].uid,
+      address,
+      sub_district,
+      district,
+      province,
+      country,
+      zip_code
+    })
 
     const result = {
       uid: registeredInfo[0].uid,
