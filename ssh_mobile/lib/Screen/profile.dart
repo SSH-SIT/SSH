@@ -3,6 +3,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:ssh_mobile/Screen/order.dart';
+import 'package:ssh_mobile/transitions/fade_transition.dart';
 import '../providers/auth.dart';
 import '../widgets/appbar.dart';
 import '../widgets/bottomNavigationBar.dart';
@@ -101,7 +103,13 @@ class _ProfileState extends State<Profile> {
                                 fontSize: 20,
                               ))
                         ],
-                      ))
+                      )),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context, FadeRoute(page: Order()));
+                      },
+                      child: Text('see order'))
                 ],
               ))
           : Container(

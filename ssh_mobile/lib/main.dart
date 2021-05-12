@@ -10,12 +10,13 @@ import './screen/profile.dart';
 import './screen/order.dart';
 import './screen/search.dart';
 
-import './screen/login_screen.dart';
+import './screen/login_Screen.dart';
 
 import 'package:provider/provider.dart';
 import './providers/auth.dart';
 import './providers/cart.dart';
 import './providers/products.dart';
+import './providers/orders.dart';
 
 import 'constant.dart';
 
@@ -50,7 +51,8 @@ class _SSHstate extends State<SSH> {
         providers: [
           ChangeNotifierProvider(create: (ctx) => Auth()),
           ChangeNotifierProvider(create: (ctx) => CartProvider()),
-          ChangeNotifierProvider(create: (ctx) => Products())
+          ChangeNotifierProvider(create: (ctx) => Products()),
+          ChangeNotifierProvider(create: (ctx) => Orders()),
         ],
         child: Consumer<Auth>(
           builder: (context, auth, child) => MaterialApp(
