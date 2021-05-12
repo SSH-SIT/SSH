@@ -48,8 +48,18 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future<void> signup(String firstName, String lastName, String email,
-      String phoneNum, String password) async {
+  Future<void> signup(
+      String firstName,
+      String lastName,
+      String email,
+      String phoneNum,
+      String password,
+      String addressInfo,
+      String subDistrict,
+      String district,
+      String province,
+      String country,
+      String zipCode) async {
     var endpoint = publicAPI + 'users/signup';
 
     try {
@@ -58,7 +68,13 @@ class Auth with ChangeNotifier {
         'lastName': lastName,
         'email': email,
         'phoneNum': phoneNum,
-        'password': password
+        'password': password,
+        'address': addressInfo,
+        'sub_district': subDistrict,
+        'district': district,
+        'province': province,
+        'country': country,
+        'zip_code': zipCode
       });
       final data = jsonDecode(res.body);
 

@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth.dart';
-import 'package:ssh_mobile/screen/login_screen.dart';
+import 'package:ssh_mobile/screen/login_Screen.dart';
 
 class SSHAppBar extends StatefulWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(65);

@@ -22,6 +22,13 @@ class _SignUpState extends State<SignUp> {
 
   final _phoneNumberController = TextEditingController();
 
+  final _addressInfoController = TextEditingController();
+  final _subDistrictController = TextEditingController();
+  final _districtController = TextEditingController();
+  final _provinceController = TextEditingController();
+  final _countryController = TextEditingController();
+  final _zipCodeController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Auth auth = Provider.of<Auth>(context);
@@ -180,6 +187,121 @@ class _SignUpState extends State<SignUp> {
                                           color: Color(0xffFEC10E)))),
                               controller: _phoneNumberController),
                           SizedBox(height: 30),
+                          Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text('Address',
+                                  style: GoogleFonts.montserrat().copyWith(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold))),
+                          SizedBox(height: 15.0),
+                          TextField(
+                              obscureText: false,
+                              style: GoogleFonts.montserrat().copyWith(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17),
+                              decoration: InputDecoration(
+                                  fillColor: Color(0xffF6D796),
+                                  filled: true,
+                                  hintText: 'Address Info.',
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      20.0, 15.0, 20.0, 15.0),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(
+                                          color: Color(0xffFEC10E)))),
+                              controller: _addressInfoController),
+                          SizedBox(height: 15.0),
+                          TextField(
+                              obscureText: false,
+                              style: GoogleFonts.montserrat().copyWith(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17),
+                              decoration: InputDecoration(
+                                  fillColor: Color(0xffF6D796),
+                                  filled: true,
+                                  hintText: 'Sub District',
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      20.0, 15.0, 20.0, 15.0),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(
+                                          color: Color(0xffFEC10E)))),
+                              controller: _subDistrictController),
+                          SizedBox(height: 15.0),
+                          TextField(
+                              obscureText: false,
+                              style: GoogleFonts.montserrat().copyWith(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17),
+                              decoration: InputDecoration(
+                                  fillColor: Color(0xffF6D796),
+                                  filled: true,
+                                  hintText: 'District',
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      20.0, 15.0, 20.0, 15.0),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(
+                                          color: Color(0xffFEC10E)))),
+                              controller: _districtController),
+                          SizedBox(height: 15.0),
+                          TextField(
+                              obscureText: false,
+                              style: GoogleFonts.montserrat().copyWith(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17),
+                              decoration: InputDecoration(
+                                  fillColor: Color(0xffF6D796),
+                                  filled: true,
+                                  hintText: 'Province',
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      20.0, 15.0, 20.0, 15.0),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(
+                                          color: Color(0xffFEC10E)))),
+                              controller: _provinceController),
+                          SizedBox(height: 15.0),
+                          TextField(
+                              obscureText: false,
+                              style: GoogleFonts.montserrat().copyWith(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17),
+                              decoration: InputDecoration(
+                                  fillColor: Color(0xffF6D796),
+                                  filled: true,
+                                  hintText: 'Country',
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      20.0, 15.0, 20.0, 15.0),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(
+                                          color: Color(0xffFEC10E)))),
+                              controller: _provinceController),
+                          SizedBox(height: 15.0),
+                          TextField(
+                              obscureText: false,
+                              style: GoogleFonts.montserrat().copyWith(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17),
+                              decoration: InputDecoration(
+                                  fillColor: Color(0xffF6D796),
+                                  filled: true,
+                                  hintText: 'Zip Code',
+                                  contentPadding: EdgeInsets.fromLTRB(
+                                      20.0, 15.0, 20.0, 15.0),
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(
+                                          color: Color(0xffFEC10E)))),
+                              controller: _zipCodeController),
+                          SizedBox(height: 15.0),
                           ConstrainedBox(
                               constraints: BoxConstraints.tightFor(
                                   width:
@@ -193,7 +315,15 @@ class _SignUpState extends State<SignUp> {
                                           _emailController.text.toString(),
                                           _phoneNumberController.text
                                               .toString(),
-                                          _passwordController.text.toString())
+                                          _passwordController.text.toString(),
+                                          _addressInfoController.text
+                                              .toString(),
+                                          _subDistrictController.text
+                                              .toString(),
+                                          _districtController.text.toString(),
+                                          _provinceController.text.toString(),
+                                          _countryController.text.toString(),
+                                          _zipCodeController.text.toString())
                                       .then((_) =>
                                           Navigator.pushReplacementNamed(
                                               context, LoginPage.routeName));
