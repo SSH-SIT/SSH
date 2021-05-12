@@ -1,13 +1,13 @@
 import API from "../api";
 
 export default {
-  getAllProducts: async () => {
-    return await API.get("/product")
+  getAllOrders: async () => {
+    return await API.get("/orders")
       .then((res) => res)
       .catch((err) => err);
   },
-  getOneProduct: async (id) => {
-    return await API.get(`/product/${id}`)
+  getOneOrder: async (order_id) => {
+    return await API.get(`/orders/${order_id}`)
       .then((res) => res)
       .catch((err) => err);
   },

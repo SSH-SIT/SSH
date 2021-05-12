@@ -2,15 +2,25 @@ const Knex = require("../database/");
 
 const getOrder = async (req, res) => {
   try {
-    const { id } = req.params;
     const users = await Knex("order")
       .innerJoin("order_details", {
         "order.order_id": "order_details.order_id",
       })
-      .where({
-        "order.uid": id,
+      .innerJoin("product", {
+        "order_details.pid": "product.pid",
       })
-      .select("*");
+      .innerJoin("user", {
+        "order.uid": "user.uid",
+      })
+      .select(
+        "order.*",
+        "order_details.*",
+        "product.pname",
+        "user.firstName",
+        "user.lastName",
+        "user.email",
+        "user.phone_num"
+      );
 
     return res.status(200).send(users);
   } catch (err) {
@@ -26,6 +36,15 @@ const getOneOrder = async (req, res) => {
       .innerJoin("order_details", {
         "order.order_id": "order_details.order_id",
       })
+      .innerJoin("product", {
+        "product.pid": "order_details.pid",
+      })
+      .innerJoin("product_picture", {
+        "product.pid": "product_picture.pid",
+      })
+      .innerJoin("product_type", {
+        "product.type_id": "product_type.type_id",
+      })
       .where({ "order.order_id": id })
       .select("*");
 
@@ -38,18 +57,23 @@ const getOneOrder = async (req, res) => {
 };
 const getOneOrderFromUserID = async (req, res) => {
   try {
-    const { id, order_id } = req.params;
-    const users = await Knex("order")
+    const { uid } = req.params;
+    const orders = await Knex("order")
       .innerJoin("order_details", {
         "order.order_id": "order_details.order_id",
       })
+      .innerJoin("product", {
+        "product.pid": "order_details.pid",
+      })
+      .innerJoin("product_picture", {
+        "product.pid": "product_picture.pid",
+      })
       .where({
-        "order.uid": id,
-        "order.order_id": order_id,
+        "order.uid": uid,
       })
       .select("*");
 
-    return res.status(200).send(users);
+    return res.status(200).send(orders);
   } catch (err) {
     return res.status(400).send({
       msg: err.message,
@@ -60,5 +84,6 @@ const getOneOrderFromUserID = async (req, res) => {
 module.exports = {
   getOrder,
   getOneOrder,
+  getOneOrderFromUserID,
   getOneOrderFromUserID,
 };

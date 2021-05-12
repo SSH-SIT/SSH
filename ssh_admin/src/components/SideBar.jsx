@@ -11,6 +11,7 @@ import {
 import { Dashboard, ShoppingCart, Ballot, Face } from "@material-ui/icons";
 
 import { useLoaded } from "../utils/Loader";
+import { useRouter } from "next/router";
 
 const drawerWidth = 240;
 
@@ -27,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SideBar({ children }) {
   const classes = useStyles();
   const loaded = useLoaded();
+  const router = useRouter();
 
   return (
     loaded && (
@@ -41,25 +43,31 @@ export default function SideBar({ children }) {
           <Toolbar />
           <div className={`${classes.toolbar} bg-navBarColor border-0`} />
           <List>
-            <ListItem button key={"Kai son"}>
-              <ListItemIcon>
-                <Face />
-              </ListItemIcon>
-              <ListItemText primary={"Kai son"} />
-            </ListItem>
-            <ListItem button key={"Dashboard"}>
+            <ListItem
+              button
+              key={"Dashboard"}
+              onClick={() => router.push("/dashboard")}
+            >
               <ListItemIcon>
                 <Dashboard />
               </ListItemIcon>
               <ListItemText primary={"Dashboard"} />
             </ListItem>
-            <ListItem button key={"Order"}>
+            <ListItem
+              button
+              key={"Order"}
+              onClick={() => router.push("/orders")}
+            >
               <ListItemIcon>
                 <Ballot />
               </ListItemIcon>
               <ListItemText primary={"Order"} />
             </ListItem>
-            <ListItem button key={"Product"}>
+            <ListItem
+              button
+              key={"Product"}
+              onClick={() => router.push("/products")}
+            >
               <ListItemIcon>
                 <ShoppingCart />
               </ListItemIcon>

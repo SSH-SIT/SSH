@@ -11,4 +11,9 @@ export default {
       .then((res) => res)
       .catch((err) => err);
   },
+  signup: async (username, password) => {
+    return API.post("/admin/signup", { username, password })
+      .then((res) => res)
+      .catch((err) => err);
+  },
 };
